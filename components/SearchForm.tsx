@@ -17,6 +17,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
 
   const onSubmit = async (values) => {
     setSearching(true);
+    setCoin(null);
     await fetchPrice(values.crypto).then(async (res) => await setCoin(res));
     setSearching(false);
   };

@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text, Button } from "@chakra-ui/react";
 import { Form } from "react-final-form";
-import ListCoin from "./ListCoin";
 import { fetchPrice } from "../pages/api/FetchPrice";
+import ListCoin from "./ListCoin";
 
 const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
   const [update, setUpdate] = React.useState<number | string>(180);
@@ -39,7 +39,7 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
   };
 
   React.useEffect(() => {
-    update > 0 && setTimeout(() => setUpdate(update - 1), 1000);
+    update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
     if (update <= 0) {
       updateList();
       setUpdate("restarting...");
@@ -78,13 +78,6 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
               >
                 Calculate Total
               </Button>
-              {/* <Button
-                type="button"
-                onClick={form.reset}
-                disabled={submitting || pristine}
-              >
-                Reset
-              </Button> */}
             </Box>
           </form>
         )}
