@@ -6,7 +6,7 @@ import Watchlist from "../components/Watchlist";
 import RunningTotal from "../components/RunningTotal";
 
 const Home = () => {
-  const [coin, setCoin] = React.useState<null | Object>(null);
+  const [coin, setCoin] = React.useState<null | any>(null);
   const [total, setTotal] = React.useState<null | number>(0);
   const [watchlist, setWatchlist] = React.useState<[]>([]);
 
@@ -25,12 +25,14 @@ const Home = () => {
           <SearchForm setCoin={setCoin} />
 
           <Box>
-            {!coin ? null : (
+            {!coin ? null : coin && !coin.error ? (
               <SearchCoin
+                coin={coin}
                 watchlist={watchlist}
                 setWatchlist={setWatchlist}
-                coin={coin}
               />
+            ) : (
+              <Box ml="10px">Error: {coin.error}</Box>
             )}
           </Box>
           <Box>
@@ -45,7 +47,7 @@ const Home = () => {
           </Box>
 
           <Box>
-            <RunningTotal total={total} />
+            {watchlist.length > 0 ? <RunningTotal total={total} /> : null}
           </Box>
         </Box>
       </Box>

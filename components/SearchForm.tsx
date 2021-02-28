@@ -2,7 +2,6 @@ import React from "react";
 import {
   Box,
   FormControl,
-  FormLabel,
   Input,
   InputGroup,
   FormErrorMessage,
@@ -11,15 +10,15 @@ import {
 import { Form, Field } from "react-final-form";
 import { required, filterCurrency } from "../generals/validations";
 import { fetchPrice } from "../pages/api/FetchPrice";
-import { fetchCoins } from "../pages/api/FetchAllCoins";
-
-interface SearchFormProps {
-  setCoin: (c) => void;
-}
+import { SearchFormProps } from "../typescript/interfaces";
 
 const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
+  const [searching, setSearching] = React.useState<boolean>(false);
+
   const onSubmit = async (values) => {
+    setSearching(true);
     await fetchPrice(values.crypto).then(async (res) => await setCoin(res));
+    setSearching(false);
   };
 
   return (
@@ -35,7 +34,6 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
                 <FormControl isInvalid={meta.touched && meta.error} w="100%">
                   <InputGroup>
                     <Input
-                      m="10px"
                       borderRadius="0"
                       borderBottom="1px solid #ccc"
                       fontSize={30}
@@ -53,7 +51,13 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
               )}
             />
             <Box p="10px 0 ">
-              <Button type="submit" colorScheme="blue" ml="1%">
+              <Button
+                type="submit"
+                colorScheme="blue"
+                m="0 1%"
+                isLoading={searching}
+                disabled={pristine || submitting}
+              >
                 Search
               </Button>
               <Button
