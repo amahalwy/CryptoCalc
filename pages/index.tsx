@@ -1,9 +1,11 @@
 import React from "react";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import SearchForm from "../components/SearchForm";
 import SearchCoin from "../components/SearchCoin";
 import Watchlist from "../components/Watchlist";
 import RunningTotal from "../components/RunningTotal";
+
+import SaveListForm from "../components/SaveListForm";
 
 const Home = () => {
   const [coin, setCoin] = React.useState<null | any>(null);
@@ -46,10 +48,10 @@ const Home = () => {
             ) : null}
           </Box>
 
-          <Box>
-            {watchlist.length > 0 ? <RunningTotal total={total} /> : null}
-          </Box>
+          {watchlist.length > 0 ? <RunningTotal total={total} /> : null}
         </Box>
+
+        {watchlist.length > 0 ? <SaveListForm watchlist={watchlist} /> : null}
       </Box>
     </Box>
   );

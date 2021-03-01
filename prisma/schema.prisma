@@ -8,15 +8,15 @@ datasource db {
 }
 
 model User {
-  id   Int    @id @default(autoincrement())
+  id   String @id
   name String
   otp  String
   List List[]
 }
 
 model List {
-  id     Int    @id @default(autoincrement())
-  userId Int
+  id     String    @id 
+  userId String
   owner  User   @relation(fields: [userId], references: [id])
   coins  Coin[]
 }
@@ -24,6 +24,6 @@ model List {
 model Coin {
   id     Int    @id @default(autoincrement())
   name   String
-  listId Int?
-  List   List?  @relation(fields: [listId], references: [id])
+  listId String
+  List   List   @relation(fields: [listId], references: [id])
 }

@@ -3,6 +3,7 @@ import { Box, Text, Button } from "@chakra-ui/react";
 import { Form } from "react-final-form";
 import { fetchPrice } from "../pages/api/FetchPrice";
 import ListCoin from "./ListCoin";
+import { prisma } from "@prisma/client";
 
 const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
   const [update, setUpdate] = React.useState<number | string>(180);
@@ -10,6 +11,29 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
   const [calculatingTotal, setCalculatingTotal] = React.useState<boolean>(
     false
   );
+
+  React.useEffect(() => {
+    update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
+    if (update <= 0) {
+      updateList();
+      setUpdate("restarting...");
+      setTimeout(() => {
+        setUpdate(180);
+      }, 2000);
+    }
+  }, [update]);
+
+  const updateList = async () => {
+    setUpdatingCoins(true);
+    const clone = watchlist.slice();
+    await watchlist.map((coin, i) => {
+      fetchPrice(coin.id).then((res) => {
+        clone[i] = res;
+        setWatchlist(clone);
+      });
+    });
+    setUpdatingCoins(false);
+  };
 
   const onSubmit = async (values) => {
     setCalculatingTotal(true);
@@ -25,29 +49,6 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
       setTotal(newTotal);
     }, 2000);
   };
-
-  const updateList = async () => {
-    setUpdatingCoins(true);
-    const clone = watchlist.slice();
-    await watchlist.map((coin, i) => {
-      fetchPrice(coin.id).then((res) => {
-        clone[i] = res;
-        setWatchlist(clone);
-      });
-    });
-    setUpdatingCoins(false);
-  };
-
-  React.useEffect(() => {
-    update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
-    if (update <= 0) {
-      updateList();
-      setUpdate("restarting...");
-      setTimeout(() => {
-        setUpdate(180);
-      }, 2000);
-    }
-  }, [update]);
 
   return (
     <Box w="98%" m="0 auto">
@@ -66,15 +67,18 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
                   coin={coin}
                   watchlist={watchlist}
                   setWatchlist={setWatchlist}
+                  // values={values}
+                  // setTotal={setTotal}
                 />
               );
             })}
-            <Box p="10px 0 ">
+            <Box p="0px 0 ">
               <Button
                 type="submit"
                 colorScheme="blue"
-                m="0 1%"
+                m="0"
                 isLoading={calculatingTotal}
+                disabled={pristine}
               >
                 Calculate Total
               </Button>

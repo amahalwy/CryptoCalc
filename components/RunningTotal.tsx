@@ -20,14 +20,13 @@ const RenderTotal = ({ total }) => {
 
 const RunningTotal = ({ total }) => {
   return (
-    <Box w="98%" m="20px auto" pb="20px">
+    <Box w="98%" m="10px auto" pb="20px">
       <Box>
         <Text d="inline" fontSize={20}>
-          Grand total:
+          Grand total:{" "}
         </Text>
         <RenderTotal total={total} />
       </Box>
-      <Text fontSize={20}>Value Change: </Text>
     </Box>
   );
 };

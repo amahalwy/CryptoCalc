@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "otp" TEXT NOT NULL,
 
@@ -9,8 +9,8 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "List" (
-    "id" SERIAL NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -19,7 +19,7 @@ CREATE TABLE "List" (
 CREATE TABLE "Coin" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "listId" INTEGER,
+    "listId" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );

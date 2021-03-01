@@ -63,7 +63,10 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
               </Button>
               <Button
                 type="button"
-                onClick={form.reset}
+                onClick={() => {
+                  form.reset();
+                  setCoin(null);
+                }}
                 disabled={submitting || pristine}
               >
                 Reset
