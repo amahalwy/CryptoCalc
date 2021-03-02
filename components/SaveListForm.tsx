@@ -13,7 +13,7 @@ import { Form, Field } from "react-final-form";
 import { required } from "../generals/validations";
 import { useAsyncFn, useAsync } from "react-use";
 
-const Demo = ({ data }) => {
+const Save = ({ data }) => {
   const [state, fetch] = useAsyncFn(async () => {
     const response = await saveList(data);
     const result = await response;
@@ -22,15 +22,17 @@ const Demo = ({ data }) => {
 
   React.useEffect(() => {
     if (data) {
-      console.log(data);
       fetch();
     }
   }, [data]);
 
-  console.log(state);
   return (
     <Box>
-      {state.loading ? <Box>Loading...</Box> : null}
+      {state.loading ? (
+        <Box>
+          <Spinner />
+        </Box>
+      ) : null}
       {state.error ? <Box>Error: {state.error.message}</Box> : null}
       {state.value ? (
         <Box>OTP for login with username: {state.value.otp}</Box>
@@ -86,7 +88,7 @@ const SaveListForm = ({ watchlist }) => {
               )}
             />
             <Box p="10px 0" ml="1%">
-              <Demo data={formData} />
+              <Save data={formData} />
               {/* <Button type="submit">Create!</Button> */}
             </Box>
           </form>

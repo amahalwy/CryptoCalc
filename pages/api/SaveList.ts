@@ -19,6 +19,7 @@ const saveList = async (req, res) => {
     data: {
       id: uuid(),
       userId: newUser.id,
+      active: req.body.active,
     },
   });
 

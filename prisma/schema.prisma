@@ -19,6 +19,7 @@ model List {
   userId String
   owner  User   @relation(fields: [userId], references: [id])
   coins  Coin[]
+  active Boolean @default(false)
 }
 
 model Coin {

@@ -31,9 +31,6 @@ class AutoSave extends React.Component {
       watchlist,
     } = this.props;
 
-    // console.log(values);
-
-    // This diff step is totally optional
     const difference = diff(this.state.values, values);
 
     if (
@@ -42,14 +39,13 @@ class AutoSave extends React.Component {
     ) {
       setCalculatingTotal(true);
       let newTotal = 0;
-      // console.log(values);
+
       for (const [key, value] of Object.entries(values)) {
         const foundCoin = watchlist.find((coin) => coin.id === key);
         const price = foundCoin.market_data.current_price.usd;
         newTotal = newTotal + price * Number(value);
       }
 
-      // values have changed
       this.setState({ submitting: true, values });
       this.promise = save(difference);
       await this.promise;

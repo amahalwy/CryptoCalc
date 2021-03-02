@@ -40,6 +40,7 @@ function StackEx() {
         title="Your Cryptocurrency Portfolio"
         desc="See how you wage against others. If you've already made a portfolio, check out how much you've made so far!"
         desc2="You have 3 total days before a final value change is registered. Goodluck!"
+        onClick={() => router.push("portfolio")}
       />
     </HStack>
   );

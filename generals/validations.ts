@@ -5,5 +5,4 @@ export const filterCurrency = (value) => {
   const coins = fetchCoins()
     .then((response) => response.json())
     .then((res) => res);
-  console.log(coins);
 };
