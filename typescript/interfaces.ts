@@ -1,5 +1,6 @@
 export interface ListCoinProps {
   coin: any | object;
+  form: any;
   watchlist: [];
   setWatchlist: (w) => void;
 }

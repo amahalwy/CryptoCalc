@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Progress, Spinner } from "@chakra-ui/react";
 import { numberWithCommas } from "../generals/functions";
 
 const RenderTotal = ({ total }) => {
@@ -18,14 +18,21 @@ const RenderTotal = ({ total }) => {
   }
 };
 
-const RunningTotal = ({ total }) => {
+const RunningTotal = ({ total, calculatingTotal, setCalculatingTotal }) => {
   return (
     <Box w="98%" m="10px auto" pb="20px">
-      <Box>
-        <Text d="inline" fontSize={20}>
+      <Box d="flex" alignItems="center">
+        <Text fontSize={20} mr="4px">
           Grand total:{" "}
         </Text>
-        <RenderTotal total={total} />
+        {calculatingTotal ? (
+          <Box d="flex">
+            <Text>Calculating...</Text>
+            <Spinner label="Calculating total" />
+          </Box>
+        ) : (
+          <RenderTotal total={total} />
+        )}
       </Box>
     </Box>
   );

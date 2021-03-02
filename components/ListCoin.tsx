@@ -19,6 +19,7 @@ import { ListCoinProps } from "../typescript/interfaces";
 
 const ListCoin: React.FC<ListCoinProps> = ({
   coin,
+  form,
   watchlist,
   setWatchlist,
 }) => {
@@ -26,6 +27,8 @@ const ListCoin: React.FC<ListCoinProps> = ({
     const id = watchlist.findIndex((item: any) => item.id === coin.id);
     const newList = watchlist.slice(0, id).concat(watchlist.slice(id + 1));
     setWatchlist(newList);
+    const name = coin.id;
+    form.mutators.removeField(name);
   };
 
   return (

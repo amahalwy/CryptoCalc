@@ -1,16 +1,22 @@
 import React from "react";
 import { Box, Text, Button } from "@chakra-ui/react";
-import { Form } from "react-final-form";
+import { Form, Field } from "react-final-form";
 import { fetchPrice } from "../pages/api/FetchPrice";
 import ListCoin from "./ListCoin";
-import { prisma } from "@prisma/client";
+import AutoSave from "./AutoSave";
+import arrayMutators from "final-form-arrays";
+import { FieldArray } from "react-final-form-arrays";
 
-const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
+const Watchlist = ({
+  watchlist,
+  setWatchlist,
+  total,
+  setTotal,
+  calculatingTotal,
+  setCalculatingTotal,
+}) => {
   const [update, setUpdate] = React.useState<number | string>(180);
   const [updatingCoins, setUpdatingCoins] = React.useState<boolean>(false);
-  const [calculatingTotal, setCalculatingTotal] = React.useState<boolean>(
-    false
-  );
 
   React.useEffect(() => {
     update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
@@ -35,19 +41,11 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
     setUpdatingCoins(false);
   };
 
-  const onSubmit = async (values) => {
-    setCalculatingTotal(true);
-    let newTotal = 0;
-    for (const [key, value] of Object.entries(values)) {
-      const foundCoin = watchlist.find((coin) => coin.id === key);
-      const price = foundCoin.market_data.current_price.usd;
-      newTotal = newTotal + price * Number(value);
-    }
+  const save = async (values) => {};
 
-    setTimeout(() => {
-      setCalculatingTotal(false);
-      setTotal(newTotal);
-    }, 2000);
+  const removeField = (args, state) => {
+    const field = state.fields[args[0]];
+    field.change(field.initial);
   };
 
   return (
@@ -57,32 +55,31 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
         {update > 0 ? "s" : null}
       </Text>
       <Form
-        onSubmit={onSubmit}
-        render={({ handleSubmit, form, submitting, pristine, values }) => (
+        onSubmit={save}
+        mutators={{
+          removeField,
+        }}
+        render={({ handleSubmit, form, values }) => (
           <form onSubmit={handleSubmit}>
+            <AutoSave
+              debounce={100}
+              save={save}
+              setTotal={setTotal}
+              watchlist={watchlist}
+              setCalculatingTotal={setCalculatingTotal}
+            />
             {watchlist.map((coin, i) => {
               return (
                 <ListCoin
                   key={i}
                   coin={coin}
+                  form={form}
                   watchlist={watchlist}
                   setWatchlist={setWatchlist}
-                  // values={values}
-                  // setTotal={setTotal}
                 />
               );
             })}
-            <Box p="0px 0 ">
-              <Button
-                type="submit"
-                colorScheme="blue"
-                m="0"
-                isLoading={calculatingTotal}
-                disabled={pristine}
-              >
-                Calculate Total
-              </Button>
-            </Box>
+            <pre>{JSON.stringify(values)}</pre>
           </form>
         )}
       />
