@@ -11,11 +11,11 @@ const SearchCoinData = ({ coin }) => {
     <Box>
       <Box mt="10px">
         <Box d="flex">
-          <Text fontSize={26} mr="10px">
+          <Text fontSize={30} mr="10px">
             Current Price: $
             {numberWithCommas(coin.market_data.current_price.usd)}
           </Text>
-          <Text fontSize={18} color={renderChangeColor(coin)} mt="6px">
+          <Text fontSize={24} color={renderChangeColor(coin)} mt="6px">
             $({renderMarketChange(coin)})
           </Text>
           <Box d="inline-block" mt="10px" ml="4px"></Box>

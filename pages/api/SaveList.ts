@@ -38,6 +38,7 @@ const saveList = async (req, res) => {
   });
 
   const response = {
+    active: req.body.active,
     name: newUser.name,
     otp: newUser.otp,
     ...updatedList,

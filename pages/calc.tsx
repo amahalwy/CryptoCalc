@@ -60,9 +60,8 @@ const Calc = () => {
               setCalculatingTotal={setCalculatingTotal}
             />
           ) : null}
+          {watchlist.length > 0 ? <SaveListForm watchlist={watchlist} /> : null}
         </Box>
-
-        {watchlist.length > 0 ? <SaveListForm watchlist={watchlist} /> : null}
       </Box>
     </Box>
   );

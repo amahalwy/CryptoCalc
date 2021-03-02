@@ -68,18 +68,19 @@ const Watchlist = ({
               watchlist={watchlist}
               setCalculatingTotal={setCalculatingTotal}
             />
-            {watchlist.map((coin, i) => {
-              return (
-                <ListCoin
-                  key={i}
-                  coin={coin}
-                  form={form}
-                  watchlist={watchlist}
-                  setWatchlist={setWatchlist}
-                />
-              );
-            })}
-            <pre>{JSON.stringify(values)}</pre>
+            <Box maxH="250px" overflow="scroll">
+              {watchlist.map((coin, i) => {
+                return (
+                  <ListCoin
+                    key={i}
+                    coin={coin}
+                    form={form}
+                    watchlist={watchlist}
+                    setWatchlist={setWatchlist}
+                  />
+                );
+              })}
+            </Box>
           </form>
         )}
       />
