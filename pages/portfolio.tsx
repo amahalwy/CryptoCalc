@@ -15,6 +15,28 @@ import { useAsyncFn } from "react-use";
 import { fetchList } from "../util/FetchList";
 import { useRouter } from "next/router";
 
+const ShowStatus = ({ state }) => {
+  console.log(state);
+
+  if (state.loading) {
+    return (
+      <Box>
+        <Spinner />
+      </Box>
+    );
+  } else if (
+    state.error ||
+    state.value === "Error: List not found" ||
+    state.value === "Internal server error"
+  ) {
+    return <Box color="red">Error: Couldn't find your list</Box>;
+  } else if (state.value && state.value !== "Error: List not found") {
+    return <Box>Found your Portfolio! Redirecting... </Box>;
+  } else {
+    return null;
+  }
+};
+
 const Save = ({ data, pristine, form }) => {
   const router = useRouter();
   const [state, fetch] = useAsyncFn(async () => {
@@ -37,29 +59,16 @@ const Save = ({ data, pristine, form }) => {
 
   return (
     <Box>
-      {state.loading ? (
-        <Box>
-          <Spinner />
+      <Box>
+        <ShowStatus state={state} />
+        <Box mt="20px">
+          <Button type="submit" disabled={pristine}>
+            Login
+          </Button>
+          <Button onClick={() => form.reset()} disabled={pristine} ml="20px">
+            Reset!
+          </Button>
         </Box>
-      ) : null}
-
-      {state.error ||
-      state.value === "Error: List not found" ||
-      state.value === "Internal server error" ? (
-        <Box>Error: Couldn't find your list</Box>
-      ) : null}
-
-      {state.value && state.value !== "Error: List not found" ? (
-        <Box>Found your Portfolio! Redirecting... </Box>
-      ) : null}
-
-      <Box mt="10px">
-        <Button type="submit" disabled={pristine}>
-          Login
-        </Button>
-        <Button onClick={() => form.reset()} disabled={pristine} ml="20px">
-          Reset!
-        </Button>
       </Box>
     </Box>
   );

@@ -14,6 +14,30 @@ import { Form, Field } from "react-final-form";
 import { required } from "../generals/validations";
 import { useAsyncFn, useAsync } from "react-use";
 
+const ShowStatus = ({ state }) => {
+  console.log(state);
+
+  if (state.loading) {
+    return (
+      <Box>
+        <Spinner />
+      </Box>
+    );
+  } else if (state.value && state.value.ErrorCode) {
+    return (
+      <Box>
+        <Text fontSize={20} color="red">
+          Username taken
+        </Text>
+      </Box>
+    );
+  } else if (state.value && !state.value.ErrorCode) {
+    return <Box>OTP for login with username: {state.value.otp}</Box>;
+  } else {
+    return null;
+  }
+};
+
 const Save = ({ data }) => {
   const [state, fetch] = useAsyncFn(async () => {
     const response = await saveList(data);
@@ -29,22 +53,7 @@ const Save = ({ data }) => {
 
   return (
     <Box>
-      {state.loading ? (
-        <Box>
-          <Spinner />
-        </Box>
-      ) : null}
-      {state.value && state.value.ErrorCode ? (
-        <Box>
-          <Text fontSize={20} color="red">
-            Username taken
-          </Text>
-        </Box>
-      ) : null}
-      {state.value && !state.value.ErrorCode ? (
-        <Box>OTP for login with username: {state.value.otp}</Box>
-      ) : null}
-
+      <ShowStatus state={state} />
       <Button m="10px 0" type="submit">
         Create!!!
       </Button>

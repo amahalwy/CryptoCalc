@@ -45,9 +45,7 @@ const Calc = () => {
               <Watchlist
                 watchlist={watchlist}
                 setWatchlist={setWatchlist}
-                total={total}
                 setTotal={setTotal}
-                calculatingTotal={calculatingTotal}
                 setCalculatingTotal={setCalculatingTotal}
               />
             ) : null}

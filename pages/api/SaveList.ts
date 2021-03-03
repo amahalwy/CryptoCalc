@@ -6,6 +6,14 @@ const saveList = async (req, res) => {
   const name = req.body.name;
   const coins = req.body.coins;
 
+  const endDate = (date) => {
+    var result = new Date(date);
+    result.setDate(result.getDate() + 3);
+    return result;
+  };
+  console.log(new Date(Date.now()));
+  const end = endDate(Date.now());
+
   try {
     const newUser = await prisma.user.create({
       data: {
@@ -20,6 +28,7 @@ const saveList = async (req, res) => {
         id: uuid(),
         userId: newUser.id,
         active: req.body.active,
+        endDate: end,
       },
     });
 
