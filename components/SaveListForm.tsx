@@ -7,6 +7,7 @@ import {
   Input,
   FormErrorMessage,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 import { saveList } from "../util/SaveList";
 import { Form, Field } from "react-final-form";
@@ -33,12 +34,18 @@ const Save = ({ data }) => {
           <Spinner />
         </Box>
       ) : null}
-      {state.error ? <Box>Error: {state.error.message}</Box> : null}
-      {state.value ? (
+      {state.value && state.value.ErrorCode ? (
+        <Box>
+          <Text fontSize={20} color="red">
+            Username taken
+          </Text>
+        </Box>
+      ) : null}
+      {state.value && !state.value.ErrorCode ? (
         <Box>OTP for login with username: {state.value.otp}</Box>
       ) : null}
 
-      <Button m="10px 0" type="submit" disabled={state.value}>
+      <Button m="10px 0" type="submit">
         Create!!!
       </Button>
     </Box>
@@ -57,6 +64,7 @@ const SaveListForm = ({ watchlist }) => {
 
     setFormData(data);
   };
+
   return (
     <Box>
       <Form
@@ -89,7 +97,6 @@ const SaveListForm = ({ watchlist }) => {
             />
             <Box p="10px 0" ml="1%">
               <Save data={formData} />
-              {/* <Button type="submit">Create!</Button> */}
             </Box>
           </form>
         )}

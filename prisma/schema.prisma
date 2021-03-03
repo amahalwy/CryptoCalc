@@ -9,17 +9,18 @@ datasource db {
 
 model User {
   id   String @id
-  name String
-  otp  String
+  name String @unique
+  otp  String @unique
   List List[]
 }
 
 model List {
-  id     String    @id 
-  userId String
-  owner  User   @relation(fields: [userId], references: [id])
-  coins  Coin[]
-  active Boolean @default(false)
+  id        String   @id
+  userId    String
+  active    Boolean  @default(false)
+  startDate DateTime @default(now())
+  owner     User     @relation(fields: [userId], references: [id])
+  coins     Coin[]
 }
 
 model Coin {

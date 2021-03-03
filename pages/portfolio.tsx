@@ -29,7 +29,7 @@ const Save = ({ data, pristine, form }) => {
         res === "Error: List not found"
           ? null
           : setTimeout(() => {
-              router.push(`/${res}`);
+              router.push(`/portfolio/${res}`);
             }, 1000);
       });
     }

@@ -1,18 +1,14 @@
 import React from "react";
-import { Box, Text, Button } from "@chakra-ui/react";
-import { Form, Field } from "react-final-form";
+import { Box, Text } from "@chakra-ui/react";
+import { Form } from "react-final-form";
 import { fetchPrice } from "../pages/api/FetchPrice";
 import ListCoin from "./ListCoin";
 import AutoSave from "./AutoSave";
-import arrayMutators from "final-form-arrays";
-import { FieldArray } from "react-final-form-arrays";
 
 const Watchlist = ({
   watchlist,
   setWatchlist,
-  total,
   setTotal,
-  calculatingTotal,
   setCalculatingTotal,
 }) => {
   const [update, setUpdate] = React.useState<number | string>(180);

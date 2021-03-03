@@ -28,13 +28,11 @@ const PortfolioPage = (props) => {
 const prisma = new PrismaClient();
 
 export const getServerSideProps = async ({ params }) => {
-  const user = await prisma.user.findFirst({
-    where: { otp: { equals: params.id } },
-  });
+  console.log(params);
 
-  const list = await prisma.list.findFirst({
+  const list = await prisma.list.findUnique({
     where: {
-      userId: { equals: user.id },
+      id: params.id,
     },
     include: {
       coins: true,

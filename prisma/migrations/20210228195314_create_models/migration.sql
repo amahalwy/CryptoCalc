@@ -11,6 +11,7 @@ CREATE TABLE "User" (
 CREATE TABLE "List" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL,
 
     PRIMARY KEY ("id")
 );
