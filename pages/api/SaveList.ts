@@ -11,7 +11,7 @@ const saveList = async (req, res) => {
     result.setDate(result.getDate() + 3);
     return result;
   };
-  console.log(new Date(Date.now()));
+
   const end = endDate(Date.now());
 
   try {
