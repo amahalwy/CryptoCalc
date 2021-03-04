@@ -1,27 +1,33 @@
-import { fetchPrice } from "../pages/api/FetchPrice";
+import { Coin } from "@prisma/client";
+import { fetchCoin } from "../pages/api/FetchCoin";
 
-export const renderMarketChange = (coin) => {
+export const renderMarketChange = (coin: any) => {
   const val = coin.market_data.price_change_24h.toFixed(2);
   return val > 0 ? `+${numberWithCommas(val)}` : `${numberWithCommas(val)}`;
 };
 
-export const renderChangeColor = (coin) => {
+export const renderChangeColor = (coin: any) => {
   return coin.market_data.price_change_24h > 0 ? "green" : "red";
 };
 
-export const findInList = (watchlist, coin) => {
-  return watchlist.find((item) => item.id === coin.id);
+export const findInList = (watchlist: Coin[], coin: Coin) => {
+  const result = watchlist.find((item) => item.id === coin.id);
+  if (!result) return false;
+  return true;
 };
 
-export const numberWithCommas = (x) => {
+export const numberWithCommas = (x: number) => {
+  if (!x) return null;
   if (x >= 1) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  } else {
-    return x;
+  } else if (x < 0.99 && x > 0) {
+    return x.toFixed(4);
+  } else if (x <= 0) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 };
 
-export const getTimeRemaining = (endtime) => {
+export const getTimeRemaining = (endtime: string) => {
   const total = Date.parse(endtime) - Date.parse(new Date());
   const seconds = Math.floor((total / 1000) % 60);
   const minutes = Math.floor((total / 1000 / 60) % 60);
@@ -36,10 +42,13 @@ export const getTimeRemaining = (endtime) => {
   };
 };
 
-export const initializePrices = (coins: any[]) => {
-  const clone = [];
-  coins.map(async (coin, i) => {
-    await fetchPrice(coin.name.toLowerCase()).then((res) => clone.push(res));
+export const initializePrices = async (coins: any[]) => {
+  const newCoins = coins.map((coin) => {
+    const tempQuant = coin.quantity;
+    return fetchCoin(coin.name.toLowerCase()).then((res) => {
+      res["quantity"] = tempQuant;
+      return res;
+    });
   });
-  return clone;
+  return Promise.all(newCoins);
 };

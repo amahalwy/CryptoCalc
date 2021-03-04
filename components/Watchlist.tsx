@@ -1,18 +1,31 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
-import { Form } from "react-final-form";
-import { fetchPrice } from "../pages/api/FetchPrice";
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  InputGroup,
+  Text,
+} from "@chakra-ui/react";
+import { Field, Form } from "react-final-form";
+import { fetchCoin } from "../pages/api/FetchCoin";
 import ListCoin from "./ListCoin";
 import AutoSave from "./AutoSave";
+import RunningTotal from "./RunningTotal";
+import SaveListBottom from "./SaveListBottom";
+import { required } from "../generals/validations";
 
 const Watchlist = ({
   watchlist,
   setWatchlist,
+  total,
   setTotal,
+  calculatingTotal,
   setCalculatingTotal,
 }) => {
   const [update, setUpdate] = React.useState<number | string>(180);
   const [updatingCoins, setUpdatingCoins] = React.useState<boolean>(false);
+  const [formData, setFormData] = React.useState<object | null>(null);
 
   React.useEffect(() => {
     update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
@@ -29,7 +42,7 @@ const Watchlist = ({
     setUpdatingCoins(true);
     const clone = watchlist.slice();
     await watchlist.map((coin, i) => {
-      fetchPrice(coin.id).then((res) => {
+      fetchCoin(coin.id).then((res) => {
         clone[i] = res;
         setWatchlist(clone);
       });
@@ -44,17 +57,38 @@ const Watchlist = ({
     field.change(field.initial);
   };
 
+  const onSubmit = (values) => {
+    watchlist.map((coin) => {
+      coin.quantity = Number(values[coin.id]);
+    });
+    const data = {
+      name: values.username,
+      coins: watchlist,
+      active: values.active,
+    };
+
+    setFormData(data);
+  };
+
+  const getTotal = () => {
+    if (!watchlist || watchlist.length === 0) return null;
+    return watchlist.reduce((acc, curr) => {
+      return acc + curr.market_data.current_price.usd;
+    }, 0);
+  };
+
   return (
-    <Box w="98%" m="0 auto">
-      <Text fontSize={24} m="20px 0">
+    <Box w="96%" m="0 auto">
+      <Text fontSize={24} m="20px 0" w="98%">
         Coins data refreshing in: {update}
         {update > 0 ? "s" : null}
       </Text>
       <Form
-        onSubmit={save}
+        onSubmit={onSubmit}
         mutators={{
           removeField,
         }}
+        initialValues={{ active: false }}
         render={({ handleSubmit, form, values }) => (
           <form onSubmit={handleSubmit}>
             <AutoSave
@@ -63,8 +97,9 @@ const Watchlist = ({
               setTotal={setTotal}
               watchlist={watchlist}
               setCalculatingTotal={setCalculatingTotal}
+              // values
             />
-            <Box maxH="250px" overflow="scroll">
+            <Box maxH="250px" overflow="scroll" m="0 auto">
               {watchlist.map((coin, i) => {
                 return (
                   <ListCoin
@@ -76,6 +111,37 @@ const Watchlist = ({
                   />
                 );
               })}
+            </Box>
+            <RunningTotal
+              total={total}
+              calculatingTotal={calculatingTotal}
+              setCalculatingTotal={setCalculatingTotal}
+            />
+            <Field
+              name="username"
+              validate={required}
+              render={({ input, meta }) => (
+                <FormControl isInvalid={meta.touched && meta.error} w="100%">
+                  <InputGroup>
+                    <Input
+                      borderRadius="0"
+                      borderBottom="1px solid #ccc"
+                      fontSize={30}
+                      w="100%"
+                      id="username"
+                      h="3.68rem"
+                      placeholder="Create portfolio with username"
+                      {...input}
+                    />
+                  </InputGroup>
+                  {meta.touched && meta.error && (
+                    <FormErrorMessage ml="1%">{meta.error}</FormErrorMessage>
+                  )}
+                </FormControl>
+              )}
+            />
+            <Box p="10px 0">
+              <SaveListBottom data={formData} total={total} />
             </Box>
           </form>
         )}

@@ -23,33 +23,28 @@ class AutoSave extends React.Component {
     if (this.promise) {
       await this.promise;
     }
-    const {
-      values,
-      save,
-      setCalculatingTotal,
-      setTotal,
-      watchlist,
-    } = this.props;
+    const { values, setCalculatingTotal, setTotal, watchlist } = this.props;
 
     const difference = diff(this.state.values, values);
+    console.log(difference);
 
+    // !difference.username &&
     if (
-      Object.keys(difference).length ||
-      Object.keys(values).length !== Object.keys(this.state.values).length
+      (Object.keys(difference).length === 1 && !difference.username) ||
+      (Object.keys(difference).length > 1 && difference.username)
     ) {
       setCalculatingTotal(true);
       let newTotal = 0;
 
       for (const [key, value] of Object.entries(values)) {
         const foundCoin = watchlist.find((coin) => coin.id === key);
+        if (!foundCoin) continue;
         const price = foundCoin.market_data.current_price.usd;
         newTotal = newTotal + price * Number(value);
       }
 
       this.setState({ submitting: true, values });
-      this.promise = save(difference);
-      await this.promise;
-      delete this.promise;
+
       this.setState({ submitting: false });
       setTimeout(() => {
         setCalculatingTotal(false);
