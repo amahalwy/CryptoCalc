@@ -5,8 +5,6 @@ import SearchCoin from "../components/SearchCoin";
 import Watchlist from "../components/Watchlist";
 import RunningTotal from "../components/RunningTotal";
 
-import SaveListForm from "../components/SaveListForm";
-
 const Calc = () => {
   const [coin, setCoin] = React.useState<null | any>(null);
   const [total, setTotal] = React.useState<null | number>(0);
@@ -29,36 +27,30 @@ const Calc = () => {
         <Box bg="white">
           <SearchForm setCoin={setCoin} />
 
-          <Box>
-            {!coin ? null : coin && !coin.error ? (
-              <SearchCoin
-                coin={coin}
-                watchlist={watchlist}
-                setWatchlist={setWatchlist}
-              />
-            ) : (
-              <Box ml="10px">Error: {coin.error}</Box>
-            )}
-          </Box>
-          <Box>
-            {watchlist.length > 0 ? (
+          {!coin ? null : coin && !coin.error ? (
+            <SearchCoin
+              coin={coin}
+              watchlist={watchlist}
+              setWatchlist={setWatchlist}
+            />
+          ) : (
+            <Box ml="10px">Error: {coin.error}</Box>
+          )}
+
+          {watchlist.length > 0 ? (
+            <Box>
               <Watchlist
                 watchlist={watchlist}
                 setWatchlist={setWatchlist}
                 setTotal={setTotal}
                 setCalculatingTotal={setCalculatingTotal}
+                total={total}
+                calculatingTotal={calculatingTotal}
               />
-            ) : null}
-          </Box>
 
-          {watchlist.length > 0 ? (
-            <RunningTotal
-              total={total}
-              calculatingTotal={calculatingTotal}
-              setCalculatingTotal={setCalculatingTotal}
-            />
+              {/* <SaveListForm watchlist={watchlist} /> */}
+            </Box>
           ) : null}
-          {watchlist.length > 0 ? <SaveListForm watchlist={watchlist} /> : null}
         </Box>
       </Box>
     </Box>

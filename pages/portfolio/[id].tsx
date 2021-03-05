@@ -1,35 +1,16 @@
 import React from "react";
-
-import {
-  Box,
-  Text,
-  Flex,
-  List,
-  Button,
-  Heading,
-  Textarea,
-  ListItem,
-  useToast,
-  Input,
-  IconButton,
-  useColorMode,
-  useDisclosure,
-  useColorModeValue,
-  InputRightElement,
-  InputGroup,
-} from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { PrismaClient } from "@prisma/client";
 import CountDown from "../../components/CountDown";
 import { getTimeRemaining, initializePrices } from "../../generals/functions";
 import TimerComponent from "../../components/TimerComponent";
-import ListCoin from "../../components/ListCoin";
-import PortfolioCoin from "../../components/PortfolioCoin";
 import PortfolioList from "../../components/PortfolioList";
 import PortfolioTotal from "../../components/PortfolioTotal";
-import { update } from "final-form-arrays";
-import { fetchPrice } from "../api/FetchPrice";
 
 export const getServerSideProps = async ({ params }) => {
+  // interface List {
+  //   startDate: Date | string;
+  // }
   const list = await prisma.list.findUnique({
     where: {
       id: params.id,
@@ -38,6 +19,12 @@ export const getServerSideProps = async ({ params }) => {
       coins: true,
     },
   });
+
+  if (!list) {
+    return {
+      notFound: true,
+    };
+  }
 
   list.startDate = list.startDate.toString();
   list.endDate = list.endDate.toString();
@@ -51,7 +38,7 @@ export const getServerSideProps = async ({ params }) => {
 
 const PortfolioPage = (props) => {
   const list = props.list;
-  const [localCoins, setLocalCoins] = React.useState<null | []>(null);
+  const [localCoins, setLocalCoins] = React.useState(null);
 
   const [timeLeft, setTimeLeft] = React.useState(
     getTimeRemaining(list.endDate)
@@ -78,7 +65,9 @@ const PortfolioPage = (props) => {
 
   React.useEffect(() => {
     if (!localCoins) {
-      setLocalCoins(initializePrices(list.coins));
+      initializePrices(list.coins).then((res) => {
+        setLocalCoins(res);
+      });
     }
   }, []);
 
@@ -97,10 +86,10 @@ const PortfolioPage = (props) => {
         </Box>
         <Box w="95%" m="0 auto">
           <Box>
-            <PortfolioTotal coins={localCoins} />
+            <PortfolioList coins={localCoins} />
           </Box>
           <Box>
-            <PortfolioList coins={list.coins} />
+            <PortfolioTotal startingTotal={list.total} coins={localCoins} />
           </Box>
         </Box>
       </Box>

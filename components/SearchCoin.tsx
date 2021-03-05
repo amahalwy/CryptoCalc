@@ -1,11 +1,6 @@
 import React from "react";
 import { Box, Button, Image, Text } from "@chakra-ui/react";
-import {
-  renderMarketChange,
-  renderChangeColor,
-  findInList,
-  numberWithCommas,
-} from "../generals/functions";
+import { findInList } from "../generals/functions";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import SearchCoinData from "./SearchCoinData";
 
@@ -18,7 +13,7 @@ const SearchCoin = ({ coin, watchlist, setWatchlist }) => {
   };
 
   return (
-    <Box w="98%" m="0 auto" borderBottom="1px solid #ccc" pb="10px">
+    <Box w="96%" m="0 auto" borderBottom="1px solid #ccc" pb="10px">
       <Box>
         <Box d="flex" justifyContent="space-between" alignItems="center">
           <Box d="flex">

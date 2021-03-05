@@ -61,7 +61,12 @@ const ListCoin: React.FC<ListCoinProps> = ({
           render={({ input, meta }) => (
             <FormControl isInvalid={meta.touched && meta.error} w="60%">
               <InputGroup>
-                <Input id={coin.id} placeholder="Quantity" {...input} />
+                <Input
+                  id={coin.id}
+                  placeholder="Quantity"
+                  {...input}
+                  mt="1px"
+                />
               </InputGroup>
               {meta.touched && meta.error && (
                 <FormErrorMessage ml="1%">{meta.error}</FormErrorMessage>
@@ -69,7 +74,7 @@ const ListCoin: React.FC<ListCoinProps> = ({
             </FormControl>
           )}
         />
-        <Button onClick={findAndRemove} ml="4%">
+        <Button onClick={findAndRemove} ml="4%" mt="1px">
           Remove
         </Button>
       </Box>

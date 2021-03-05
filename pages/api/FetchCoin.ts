@@ -1,6 +1,6 @@
-export const fetchPrice = async (ticket) => {
+export const fetchCoin = async (ticket) => {
   const req = await fetch(
-    `https://coingecko.p.rapidapi.com/simple/price?ids=${ticket}&vs_currencies=usd`,
+    `${process.env.NEXT_PUBLIC_RAPID_API_URL_FIRST}${ticket}${process.env.NEXT_PUBLIC_RAPID_API_URL_SECOND}`,
     {
       method: "GET",
       headers: {

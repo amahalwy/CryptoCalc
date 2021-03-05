@@ -5,6 +5,9 @@ const saveList = async (req, res) => {
   const prisma = new PrismaClient();
   const name = req.body.name;
   const coins = req.body.coins;
+  const total = coins.reduce((acc, curr) => {
+    return acc + curr.market_data.current_price.usd * curr.quantity;
+  }, 0);
 
   const endDate = (date) => {
     var result = new Date(date);
@@ -29,13 +32,18 @@ const saveList = async (req, res) => {
         userId: newUser.id,
         active: req.body.active,
         endDate: end,
+        total,
       },
     });
 
     await Promise.all(
       coins.map(async (coin) => {
         return prisma.coin.create({
-          data: { name: coin.name, listId: newList.id },
+          data: {
+            name: coin.name,
+            listId: newList.id,
+            quantity: coin.quantity || 0,
+          },
         });
       })
     );

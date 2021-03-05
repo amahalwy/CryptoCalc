@@ -8,8 +8,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Form, Field } from "react-final-form";
-import { required, filterCurrency } from "../generals/validations";
-import { fetchPrice } from "../pages/api/FetchPrice";
+import { required } from "../generals/validations";
+import { fetchCoin } from "../pages/api/FetchCoin";
 import { SearchFormProps } from "../typescript/interfaces";
 
 const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
@@ -18,7 +18,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
   const onSubmit = async (values) => {
     setSearching(true);
     setCoin(null);
-    await fetchPrice(values.crypto).then(async (res) => await setCoin(res));
+    await fetchCoin(values.crypto).then(async (res) => await setCoin(res));
     setSearching(false);
   };
 

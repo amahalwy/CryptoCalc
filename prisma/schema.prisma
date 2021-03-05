@@ -22,11 +22,13 @@ model List {
   endDate   DateTime 
   owner     User     @relation(fields: [userId], references: [id])
   coins     Coin[]
+  total Int
 }
 
 model Coin {
   id     Int    @id @default(autoincrement())
   name   String
   listId String
+  quantity Int 
   List   List   @relation(fields: [listId], references: [id])
 }
