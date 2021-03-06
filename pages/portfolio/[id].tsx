@@ -8,9 +8,6 @@ import PortfolioList from "../../components/PortfolioList";
 import PortfolioTotal from "../../components/PortfolioTotal";
 
 export const getServerSideProps = async ({ params }) => {
-  // interface List {
-  //   startDate: Date | string;
-  // }
   const list = await prisma.list.findUnique({
     where: {
       id: params.id,

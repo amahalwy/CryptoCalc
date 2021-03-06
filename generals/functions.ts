@@ -28,7 +28,7 @@ export const numberWithCommas = (x: number) => {
 };
 
 export const getTimeRemaining = (endtime: string) => {
-  const total = Date.parse(endtime) - Date.parse(new Date());
+  const total = Date.parse(endtime) - Date.parse(new Date().toString());
   const seconds = Math.floor((total / 1000) % 60);
   const minutes = Math.floor((total / 1000 / 60) % 60);
   const hours = Math.floor((total / (1000 * 60 * 60)) % 24);

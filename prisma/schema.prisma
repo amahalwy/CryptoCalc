@@ -18,8 +18,8 @@ model List {
   id        String   @id
   userId    String
   active    Boolean  @default(true)
-  startDate DateTime @default(now())
-  endDate   DateTime 
+  startDate String 
+  endDate   String 
   owner     User     @relation(fields: [userId], references: [id])
   coins     Coin[]
   total Int

@@ -5,7 +5,7 @@ const saveList = async (req, res) => {
   const prisma = new PrismaClient();
   const name = req.body.name;
   const coins = req.body.coins;
-  const total = coins.reduce((acc, curr) => {
+  const total: number = coins.reduce((acc, curr) => {
     return acc + curr.market_data.current_price.usd * curr.quantity;
   }, 0);
 
@@ -15,7 +15,8 @@ const saveList = async (req, res) => {
     return result;
   };
 
-  const end = endDate(Date.now());
+  const start = Date.now().toString();
+  const end = endDate(Date.now()).toString();
 
   try {
     const newUser = await prisma.user.create({
@@ -31,6 +32,7 @@ const saveList = async (req, res) => {
         id: uuid(),
         userId: newUser.id,
         active: req.body.active,
+        startDate: start,
         endDate: end,
         total,
       },
