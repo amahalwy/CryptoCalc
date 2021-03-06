@@ -19,6 +19,7 @@ import { ListCoinProps } from "../typescript/interfaces";
 
 const ListCoin: React.FC<ListCoinProps> = ({
   coin,
+  form,
   watchlist,
   setWatchlist,
 }) => {
@@ -26,6 +27,8 @@ const ListCoin: React.FC<ListCoinProps> = ({
     const id = watchlist.findIndex((item: any) => item.id === coin.id);
     const newList = watchlist.slice(0, id).concat(watchlist.slice(id + 1));
     setWatchlist(newList);
+    const name = coin.id;
+    form.mutators.removeField(name);
   };
 
   return (
@@ -58,7 +61,12 @@ const ListCoin: React.FC<ListCoinProps> = ({
           render={({ input, meta }) => (
             <FormControl isInvalid={meta.touched && meta.error} w="60%">
               <InputGroup>
-                <Input id={coin.id} placeholder="Quantity" {...input} />
+                <Input
+                  id={coin.id}
+                  placeholder="Quantity"
+                  {...input}
+                  mt="1px"
+                />
               </InputGroup>
               {meta.touched && meta.error && (
                 <FormErrorMessage ml="1%">{meta.error}</FormErrorMessage>
@@ -66,7 +74,7 @@ const ListCoin: React.FC<ListCoinProps> = ({
             </FormControl>
           )}
         />
-        <Button onClick={findAndRemove} ml="4%">
+        <Button onClick={findAndRemove} ml="4%" mt="1px">
           Remove
         </Button>
       </Box>

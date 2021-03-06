@@ -1,42 +1,31 @@
 import React from "react";
-import { Box, Text, Button } from "@chakra-ui/react";
-import { Form } from "react-final-form";
-import { fetchPrice } from "../pages/api/FetchPrice";
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  InputGroup,
+  Text,
+} from "@chakra-ui/react";
+import { Field, Form } from "react-final-form";
+import { fetchCoin } from "../pages/api/FetchCoin";
 import ListCoin from "./ListCoin";
+import AutoSave from "./AutoSave";
+import RunningTotal from "./RunningTotal";
+import SaveListBottom from "./SaveListBottom";
+import { required } from "../generals/validations";
 
-const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
+const Watchlist = ({
+  watchlist,
+  setWatchlist,
+  total,
+  setTotal,
+  calculatingTotal,
+  setCalculatingTotal,
+}) => {
   const [update, setUpdate] = React.useState<number | string>(180);
   const [updatingCoins, setUpdatingCoins] = React.useState<boolean>(false);
-  const [calculatingTotal, setCalculatingTotal] = React.useState<boolean>(
-    false
-  );
-
-  const onSubmit = async (values) => {
-    setCalculatingTotal(true);
-    let newTotal = 0;
-    for (const [key, value] of Object.entries(values)) {
-      const foundCoin = watchlist.find((coin) => coin.id === key);
-      const price = foundCoin.market_data.current_price.usd;
-      newTotal = newTotal + price * Number(value);
-    }
-
-    setTimeout(() => {
-      setCalculatingTotal(false);
-      setTotal(newTotal);
-    }, 2000);
-  };
-
-  const updateList = async () => {
-    setUpdatingCoins(true);
-    const clone = watchlist.slice();
-    await watchlist.map((coin, i) => {
-      fetchPrice(coin.id).then((res) => {
-        clone[i] = res;
-        setWatchlist(clone);
-      });
-    });
-    setUpdatingCoins(false);
-  };
+  const [formData, setFormData] = React.useState<object | null>(null);
 
   React.useEffect(() => {
     update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
@@ -49,35 +38,110 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
     }
   }, [update]);
 
+  const updateList = async () => {
+    setUpdatingCoins(true);
+    const clone = watchlist.slice();
+    await watchlist.map((coin, i) => {
+      fetchCoin(coin.id).then((res) => {
+        clone[i] = res;
+        setWatchlist(clone);
+      });
+    });
+    setUpdatingCoins(false);
+  };
+
+  const save = async (values) => {};
+
+  const removeField = (args, state) => {
+    const field = state.fields[args[0]];
+    field.change(field.initial);
+  };
+
+  const onSubmit = (values) => {
+    watchlist.map((coin) => {
+      coin.quantity = Number(values[coin.id]);
+    });
+    const data = {
+      name: values.username,
+      coins: watchlist,
+      active: values.active,
+    };
+
+    setFormData(data);
+  };
+
+  const getTotal = () => {
+    if (!watchlist || watchlist.length === 0) return null;
+    return watchlist.reduce((acc, curr) => {
+      return acc + curr.market_data.current_price.usd;
+    }, 0);
+  };
+
   return (
-    <Box w="98%" m="0 auto">
-      <Text fontSize={24} m="20px 0">
+    <Box w="96%" m="0 auto">
+      <Text fontSize={24} m="20px 0" w="98%">
         Coins data refreshing in: {update}
         {update > 0 ? "s" : null}
       </Text>
       <Form
         onSubmit={onSubmit}
-        render={({ handleSubmit, form, submitting, pristine, values }) => (
+        mutators={{
+          removeField,
+        }}
+        initialValues={{ active: false }}
+        render={({ handleSubmit, form, values }) => (
           <form onSubmit={handleSubmit}>
-            {watchlist.map((coin, i) => {
-              return (
-                <ListCoin
-                  key={i}
-                  coin={coin}
-                  watchlist={watchlist}
-                  setWatchlist={setWatchlist}
-                />
-              );
-            })}
-            <Box p="10px 0 ">
-              <Button
-                type="submit"
-                colorScheme="blue"
-                m="0 1%"
-                isLoading={calculatingTotal}
-              >
-                Calculate Total
-              </Button>
+            <AutoSave
+              debounce={100}
+              save={save}
+              setTotal={setTotal}
+              watchlist={watchlist}
+              setCalculatingTotal={setCalculatingTotal}
+              // values
+            />
+            <Box maxH="250px" overflow="scroll" m="0 auto">
+              {watchlist.map((coin, i) => {
+                return (
+                  <ListCoin
+                    key={i}
+                    coin={coin}
+                    form={form}
+                    watchlist={watchlist}
+                    setWatchlist={setWatchlist}
+                  />
+                );
+              })}
+            </Box>
+            <RunningTotal
+              total={total}
+              calculatingTotal={calculatingTotal}
+              setCalculatingTotal={setCalculatingTotal}
+            />
+            <Field
+              name="username"
+              validate={required}
+              render={({ input, meta }) => (
+                <FormControl isInvalid={meta.touched && meta.error} w="100%">
+                  <InputGroup>
+                    <Input
+                      borderRadius="0"
+                      borderBottom="1px solid #ccc"
+                      fontSize={30}
+                      w="100%"
+                      id="username"
+                      h="3.68rem"
+                      placeholder="Create portfolio with username"
+                      {...input}
+                    />
+                  </InputGroup>
+                  {meta.touched && meta.error && (
+                    <FormErrorMessage ml="1%">{meta.error}</FormErrorMessage>
+                  )}
+                </FormControl>
+              )}
+            />
+            <Box p="10px 0">
+              <SaveListBottom data={formData} total={total} />
             </Box>
           </form>
         )}

@@ -1,6 +1,6 @@
-export const fetchPrice = (ticket) => {
-  const req = fetch(
-    `${process.env.NEXT_PUBLIC_RAPID_API_URL_FIRST}${ticket}${process.env.NEXT_PUBLIC_RAPID_API_URL_SECOND}`,
+export const fetchPrice = async (ticket) => {
+  const req = await fetch(
+    `${process.env.NEXT_PUBLIC_RAPID_API_FETCH_PRICE_FIRST}${ticket}${process.env.NEXT_PUBLIC_RAPID_API_FETCH_PRICE_SECOND}`,
     {
       method: "GET",
       headers: {
@@ -8,6 +8,6 @@ export const fetchPrice = (ticket) => {
         "x-rapidapi-host": process.env.NEXT_PUBLIC_RAPID_API_HOST,
       },
     }
-  ).then((res) => res.json());
-  return req;
+  );
+  return await req.json();
 };
