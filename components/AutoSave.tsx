@@ -6,17 +6,23 @@ class AutoSave extends React.Component {
   promise?: any;
   timeout?: any;
   submitting?: any;
+  props: any;
+  state: any;
 
   constructor(props) {
     super(props);
-    this.state = { values: props.values, submitting: false };
+    this.state = {
+      values: props.values,
+      submitting: false,
+      debounce: props.debounce,
+    };
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
-    this.timeout = setTimeout(this.save, this.props.debounce);
+    this.timeout = setTimeout(this.save, this.state.debounce);
   }
 
   save = async () => {
@@ -26,9 +32,7 @@ class AutoSave extends React.Component {
     const { values, setCalculatingTotal, setTotal, watchlist } = this.props;
 
     const difference = diff(this.state.values, values);
-    console.log(difference);
 
-    // !difference.username &&
     if (
       (Object.keys(difference).length === 1 && !difference.username) ||
       (Object.keys(difference).length > 1 && difference.username)
@@ -54,8 +58,6 @@ class AutoSave extends React.Component {
   };
 
   render() {
-    // This component doesn't have to render anything, but it can render
-    // submitting state.
     return this.state.submitting && <div>Submitting...</div>;
   }
 }
