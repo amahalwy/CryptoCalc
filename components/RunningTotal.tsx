@@ -4,7 +4,7 @@ import { numberWithCommas } from "../generals/functions";
 
 const RenderTotal = ({ total }) => {
   if (total <= 1000000) {
-    const rem = numberWithCommas((1000000 - total).toFixed(2));
+    const rem = numberWithCommas(Number((1000000 - total).toFixed(2)));
     return (
       <Box>
         <Text color="green" d="inline" fontSize={20} mr="4px">
@@ -16,7 +16,7 @@ const RenderTotal = ({ total }) => {
       </Box>
     );
   } else {
-    const over = numberWithCommas((total - 1000000).toFixed(2));
+    const over = numberWithCommas(Number((total - 1000000).toFixed(2)));
     return (
       <Box>
         <Text color="red" d="inline" fontSize={20}>
