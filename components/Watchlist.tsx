@@ -1,11 +1,15 @@
 import React from "react";
 import { Box, Text, Button } from "@chakra-ui/react";
 import { Form } from "react-final-form";
+import { fetchPrice } from "../pages/api/FetchPrice";
 import ListCoin from "./ListCoin";
 
 const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
-  // const [update, setUpdate] = React.useState(null);
-  const [calculatingTotal, setCalculatingTotal] = React.useState(false);
+  const [update, setUpdate] = React.useState<number | string>(180);
+  const [updatingCoins, setUpdatingCoins] = React.useState<boolean>(false);
+  const [calculatingTotal, setCalculatingTotal] = React.useState<boolean>(
+    false
+  );
 
   const onSubmit = async (values) => {
     setCalculatingTotal(true);
@@ -22,9 +26,35 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
     }, 2000);
   };
 
+  const updateList = async () => {
+    setUpdatingCoins(true);
+    const clone = watchlist.slice();
+    await watchlist.map((coin, i) => {
+      fetchPrice(coin.id).then((res) => {
+        clone[i] = res;
+        setWatchlist(clone);
+      });
+    });
+    setUpdatingCoins(false);
+  };
+
+  React.useEffect(() => {
+    update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
+    if (update <= 0) {
+      updateList();
+      setUpdate("restarting...");
+      setTimeout(() => {
+        setUpdate(180);
+      }, 2000);
+    }
+  }, [update]);
+
   return (
     <Box w="98%" m="0 auto">
-      <Text>Coins data refreshing in: {/*update*/}</Text>
+      <Text fontSize={24} m="20px 0">
+        Coins data refreshing in: {update}
+        {update > 0 ? "s" : null}
+      </Text>
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, form, submitting, pristine, values }) => (
@@ -34,8 +64,8 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
                 <ListCoin
                   key={i}
                   coin={coin}
-                  total={total}
-                  setTotal={setTotal}
+                  watchlist={watchlist}
+                  setWatchlist={setWatchlist}
                 />
               );
             })}
@@ -43,17 +73,10 @@ const Watchlist = ({ watchlist, setWatchlist, total, setTotal }) => {
               <Button
                 type="submit"
                 colorScheme="blue"
-                ml="1%"
+                m="0 1%"
                 isLoading={calculatingTotal}
               >
                 Calculate Total
-              </Button>
-              <Button
-                type="button"
-                onClick={form.reset}
-                disabled={submitting || pristine}
-              >
-                Reset
               </Button>
             </Box>
           </form>
