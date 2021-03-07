@@ -11,7 +11,16 @@ export interface SearchFormProps {
 
 export interface WatchlistProps {
   watchlist: [];
+  total: number;
+  calculatingTotal: boolean;
   setTotal: (t) => void;
   setWatchlist: (w) => void;
   setCalculatingTotal: (t) => void;
+}
+
+export interface Coin {
+  id: number;
+  quantity: number;
+  name: string;
+  listId: string;
 }
