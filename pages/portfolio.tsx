@@ -16,8 +16,6 @@ import { fetchList } from "../util/FetchList";
 import { useRouter } from "next/router";
 
 const ShowStatus = ({ state }) => {
-  console.log(state);
-
   if (state.loading) {
     return (
       <Box>
@@ -63,10 +61,10 @@ const Save = ({ data, pristine, form }) => {
         <ShowStatus state={state} />
         <Box mt="20px">
           <Button type="submit" disabled={pristine}>
-            Login
+            Search
           </Button>
           <Button onClick={() => form.reset()} disabled={pristine} ml="20px">
-            Reset!
+            Reset
           </Button>
         </Box>
       </Box>
@@ -87,19 +85,14 @@ const Porfolio = () => {
   return (
     <Box m="8% auto" w="30%">
       <Box minH="350px" bg="white" pb="10px">
-        <Box
-          d="flex"
-          p="4% 0"
-          justifyContent="center"
-          borderBottom="1px solid #ccc"
-        >
-          <Heading color="orange.300">Log into your Crypto Portfolio</Heading>
+        <Box d="flex" p="4% 0" ml="5%" borderBottom="1px solid #ccc">
+          <Heading color="orange.400">Search for Portfolio</Heading>
         </Box>
         <Box>
           <Form
             onSubmit={onSubmit}
             initialValues={{ active: false }}
-            render={({ handleSubmit, form, submitting, pristine, values }) => (
+            render={({ handleSubmit, form, pristine }) => (
               <form onSubmit={handleSubmit}>
                 <Field
                   name="username"
