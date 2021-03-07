@@ -74,7 +74,7 @@ const Watchlist: React.FC<WatchlistProps> = ({
 
   return (
     <Box w="96%" m="0 auto">
-      <Text fontSize={24} m="20px 0" w="98%">
+      <Text fontSize={{ base: 18, lg: 24 }} m="20px 0" w="98%">
         Coins data refreshing in: {update}
         {update > 0 ? "s" : null}
       </Text>
@@ -120,7 +120,7 @@ const Watchlist: React.FC<WatchlistProps> = ({
                     <Input
                       borderRadius="0"
                       borderBottom="1px solid #ccc"
-                      fontSize={30}
+                      fontSize={{ base: 24, lg: 30 }}
                       w="100%"
                       id="username"
                       h="3.68rem"

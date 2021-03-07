@@ -33,7 +33,7 @@ const RenderTotal = ({ total }) => {
 const RunningTotal = ({ total, calculatingTotal, setCalculatingTotal }) => {
   return (
     <Box m="10px auto" pb="20px">
-      <Box d="flex" alignItems="center">
+      <Box d={{ base: "block", lg: "flex" }} alignItems="center">
         <Text fontSize={20} mr="4px">
           Grand total:
         </Text>

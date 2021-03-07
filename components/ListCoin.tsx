@@ -33,14 +33,14 @@ const ListCoin: React.FC<ListCoinProps> = ({
 
   return (
     <Box
-      d="flex"
+      d={{ base: "block", lg: "flex" }}
       justifyContent="space-between"
       borderBottom="1px solid #ccc"
       pb="20px"
       mb="20px"
     >
-      <Box d="flex" w="100%">
-        <Box mt="5px" mr="10px">
+      <Box d="flex" justifyContent="flex-start">
+        <Box mt={{ base: "10px", lg: "7px" }} mr={{ base: "4px", lg: "10px" }}>
           <Image src={coin.image.thumb} />
         </Box>
         <Box>
@@ -55,7 +55,7 @@ const ListCoin: React.FC<ListCoinProps> = ({
           </Text>
         </Box>
       </Box>
-      <Box d="flex" w="20%">
+      <Box d="flex" w={{ base: "80%", lg: "20%" }}>
         <Field
           name={coin.id}
           render={({ input, meta }) => (

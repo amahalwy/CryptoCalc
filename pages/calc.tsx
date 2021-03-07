@@ -14,9 +14,9 @@ const Calc = () => {
 
   return (
     <Box h="100%" w="100%">
-      <Box w="60%" m="4% auto" pb="2%">
+      <Box w={{ base: "90%", lg: "60%" }} m="4% auto" pb="2%">
         <Box mb="10px">
-          <Heading fontSize={54} color="orange.400">
+          <Heading fontSize={{ base: 44, lg: 54 }} color="orange.400">
             CryptoCalc
           </Heading>
           <Heading fontSize={24} color="orange.400">
