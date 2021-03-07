@@ -1,9 +1,13 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import { numberWithCommas } from "../generals/functions";
+import { PortfolioTotalProps } from "../typescript/interfaces";
 
-const GetChange = ({ total, startingTotal }) => {
-  const diff = total - startingTotal;
+const GetChange: React.FC<{ total: number; startingTotal: number }> = ({
+  total,
+  startingTotal,
+}) => {
+  const diff: number = total - startingTotal;
 
   return (
     <Text fontSize={20} color={diff > 0 ? "green" : "red"} mt="2px">
@@ -12,7 +16,10 @@ const GetChange = ({ total, startingTotal }) => {
   );
 };
 
-const PortfolioTotal = ({ coins, startingTotal }) => {
+const PortfolioTotal: React.FC<PortfolioTotalProps> = ({
+  coins,
+  startingTotal,
+}) => {
   const [total, setTotal] = React.useState<number>(0);
   const getTotal = () => {
     return coins.reduce((acc, curr) => {

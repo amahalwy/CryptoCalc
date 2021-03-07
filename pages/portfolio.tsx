@@ -15,7 +15,13 @@ import { useAsyncFn } from "react-use";
 import { fetchList } from "../util/FetchList";
 import { useRouter } from "next/router";
 
-const ShowStatus = ({ state }) => {
+const ShowStatus: React.FC<{
+  state: {
+    loading?: boolean;
+    error?: object | any;
+    value?: object | any;
+  };
+}> = ({ state }) => {
   if (state.loading) {
     return (
       <Box>
@@ -27,7 +33,11 @@ const ShowStatus = ({ state }) => {
     state.value === "Error: List not found" ||
     state.value === "Internal server error"
   ) {
-    return <Box color="red">Error: Couldn't find your list</Box>;
+    return (
+      <Box color="red" mb="10px">
+        Error: Couldn't find your list
+      </Box>
+    );
   } else if (state.value && state.value !== "Error: List not found") {
     return <Box>Found your Portfolio! Redirecting... </Box>;
   } else {
@@ -35,7 +45,11 @@ const ShowStatus = ({ state }) => {
   }
 };
 
-const Search = ({ data, pristine, form }) => {
+const Search: React.FC<{
+  data: object | any;
+  pristine: boolean;
+  form: object | any;
+}> = ({ data, pristine, form }) => {
   const router = useRouter();
   const [state, fetch] = useAsyncFn(async () => {
     const response = await fetchList(data);
@@ -74,7 +88,8 @@ const Search = ({ data, pristine, form }) => {
 
 const Porfolio = () => {
   const [formData, setFormData] = React.useState<object | null>(null);
-  const onSubmit = (values) => {
+  const onSubmit = (values: { username: string }) => {
+    console.log(values);
     const data: { name: string } = {
       name: values.username,
     };
@@ -92,7 +107,6 @@ const Porfolio = () => {
         <Box>
           <Form
             onSubmit={onSubmit}
-            initialValues={{ active: false }}
             render={({ handleSubmit, form, pristine }) => (
               <form onSubmit={handleSubmit}>
                 <Field
@@ -116,9 +130,7 @@ const Porfolio = () => {
                         />
                       </InputGroup>
                       {meta.touched && meta.error && (
-                        <FormErrorMessage ml="1%">
-                          {meta.error}
-                        </FormErrorMessage>
+                        <FormErrorMessage>{meta.error}</FormErrorMessage>
                       )}
                     </FormControl>
                   )}

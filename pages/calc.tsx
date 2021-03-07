@@ -4,7 +4,7 @@ import SearchForm from "../components/SearchForm";
 import SearchCoin from "../components/SearchCoin";
 import Watchlist from "../components/Watchlist";
 
-const Calc = () => {
+const Calc: React.FC = () => {
   const [coin, setCoin] = React.useState<null | any>(null);
   const [total, setTotal] = React.useState<null | number>(0);
   const [watchlist, setWatchlist] = React.useState<[]>([]);

@@ -1,7 +1,12 @@
 import React from "react";
 import { Box, Spinner, Text } from "@chakra-ui/react";
 
-const ShowStatus = ({ state }) => {
+const ShowStatus: React.FC<{
+  state: {
+    loading?: boolean;
+    value: object | any;
+  };
+}> = ({ state }) => {
   if (state.loading) {
     return (
       <Box>

@@ -1,4 +1,4 @@
-export const fetchCoin = async (ticket) => {
+export const fetchCoin = async (ticket: string) => {
   const req = await fetch(
     `${process.env.NEXT_PUBLIC_RAPID_API_URL_FIRST}${ticket.toLowerCase()}${
       process.env.NEXT_PUBLIC_RAPID_API_URL_SECOND

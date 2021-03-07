@@ -1,6 +1,10 @@
-export const fetchPrice = async (ticket) => {
+export const fetchPrice = async (ticket: string) => {
   const req = await fetch(
-    `${process.env.NEXT_PUBLIC_RAPID_API_FETCH_PRICE_FIRST}${ticket}${process.env.NEXT_PUBLIC_RAPID_API_FETCH_PRICE_SECOND}`,
+    `${
+      process.env.NEXT_PUBLIC_RAPID_API_FETCH_PRICE_FIRST
+    }${ticket.toLowerCase()}${
+      process.env.NEXT_PUBLIC_RAPID_API_FETCH_PRICE_SECOND
+    }`,
     {
       method: "GET",
       headers: {

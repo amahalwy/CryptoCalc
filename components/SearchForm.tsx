@@ -15,10 +15,10 @@ import { SearchFormProps } from "../typescript/interfaces";
 const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
   const [searching, setSearching] = React.useState<boolean>(false);
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: { crypto: string }) => {
     setSearching(true);
     setCoin(null);
-    await fetchCoin(values.crypto).then(async (res) => await setCoin(res));
+    await fetchCoin(values.crypto).then((res) => setCoin(res));
     setSearching(false);
   };
 

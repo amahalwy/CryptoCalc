@@ -1,7 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
+import { TimerComponentProps } from "../typescript/interfaces";
 
-const TimerComponent = ({ timeLeft, interval }) => {
+const TimerComponent: React.FC<TimerComponentProps> = ({
+  timeLeft,
+  interval,
+}) => {
   return (
     <Box
       key={interval}

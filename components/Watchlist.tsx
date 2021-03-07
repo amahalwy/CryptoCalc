@@ -15,7 +15,7 @@ import RunningTotal from "./RunningTotal";
 import SaveListBottom from "./SaveListBottom";
 import { required } from "../generals/validations";
 import { Coin, WatchlistProps } from "../typescript/interfaces";
-import { SubmitData } from "../typescript/watchlistInterfaces";
+import { SubmitData } from "../typescript/interfaces";
 
 const Watchlist: React.FC<WatchlistProps> = ({
   total,
@@ -41,15 +41,13 @@ const Watchlist: React.FC<WatchlistProps> = ({
   }, [update]);
 
   const updateList = async () => {
-    setUpdatingCoins(true);
     const clone: Coin[] = watchlist.slice();
-    watchlist.map((coin: Coin, i) => {
+    watchlist.map((coin: object | any, i) => {
       return fetchCoin(coin.id).then((res: any) => {
         clone[i] = res;
         setWatchlist(clone);
       });
     });
-    setUpdatingCoins(false);
   };
 
   const save = async (values) => {};
@@ -79,7 +77,7 @@ const Watchlist: React.FC<WatchlistProps> = ({
         {update > 0 ? "s" : null}
       </Text>
       <Form
-        onSubmit={onSubmit}
+        onSubmit={() => null}
         mutators={{
           removeField,
         }}
@@ -106,11 +104,7 @@ const Watchlist: React.FC<WatchlistProps> = ({
                 );
               })}
             </Box>
-            <RunningTotal
-              total={total}
-              calculatingTotal={calculatingTotal}
-              setCalculatingTotal={setCalculatingTotal}
-            />
+            <RunningTotal total={total} calculatingTotal={calculatingTotal} />
             <Field
               name="username"
               validate={required}

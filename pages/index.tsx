@@ -2,7 +2,12 @@ import React from "react";
 import { Box, Stack, HStack, VStack, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
-function Feature({ title, desc, desc2, ...rest }) {
+const Feature: React.FC<{
+  title: string;
+  desc: string;
+  desc2: string;
+  onClick: (r) => void;
+}> = ({ title, desc, desc2, ...rest }) => {
   return (
     <Box
       p={5}
@@ -24,9 +29,9 @@ function Feature({ title, desc, desc2, ...rest }) {
       </Text>
     </Box>
   );
-}
+};
 
-function StackEx() {
+const StackEx = () => {
   const router = useRouter();
   return (
     <Box
@@ -51,7 +56,7 @@ function StackEx() {
       />
     </Box>
   );
-}
+};
 
 const Home = () => {
   return (

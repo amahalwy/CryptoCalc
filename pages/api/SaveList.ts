@@ -1,25 +1,25 @@
-import { PrismaClient } from "@prisma/client";
+import { Coin, List, PrismaClient, User } from "@prisma/client";
 import { uuid } from "uuidv4";
 
 const saveList = async (req, res) => {
   const prisma = new PrismaClient();
-  const name = req.body.name;
-  const coins = req.body.coins;
+  const name: string = req.body.name;
+  const coins: any[] = req.body.coins;
   const total: number = coins.reduce((acc, curr) => {
     return acc + curr.market_data.current_price.usd * curr.quantity;
   }, 0);
 
-  const endDate = (date) => {
+  const endDate = (date: number) => {
     var result = new Date(date);
     result.setDate(result.getDate() + 3);
     return result;
   };
 
-  const start = Date.now().toString();
-  const end = endDate(Date.now()).toString();
+  const start: string = Date.now().toString();
+  const end: string = endDate(Date.now()).toString();
 
   try {
-    const newUser = await prisma.user.create({
+    const newUser: User = await prisma.user.create({
       data: {
         id: uuid(),
         name,
@@ -27,7 +27,7 @@ const saveList = async (req, res) => {
       },
     });
 
-    const newList = await prisma.list.create({
+    const newList: List = await prisma.list.create({
       data: {
         id: uuid(),
         userId: newUser.id,
@@ -50,14 +50,23 @@ const saveList = async (req, res) => {
       })
     );
 
-    const updatedList = await prisma.list.findUnique({
+    const updatedList: List = await prisma.list.findUnique({
       where: { id: newList.id },
       include: {
         coins: true,
       },
     });
 
-    const response = {
+    const response: {
+      active: boolean;
+      name: string;
+      otp: string;
+      id: string;
+      userId: string;
+      startDate: string;
+      endDate: string;
+      total: number;
+    } = {
       active: req.body.active,
       name: newUser.name,
       otp: newUser.otp,

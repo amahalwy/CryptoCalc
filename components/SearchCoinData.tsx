@@ -6,7 +6,7 @@ import {
   numberWithCommas,
 } from "../generals/functions";
 
-const SearchCoinData = ({ coin }) => {
+const SearchCoinData: React.FC<{ coin: object | any }> = ({ coin }) => {
   return (
     <Box>
       <Box mt="10px">

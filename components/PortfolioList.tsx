@@ -3,16 +3,16 @@ import { Box, CircularProgress, Heading, Text } from "@chakra-ui/react";
 import PortfolioCoin from "./PortfolioCoin";
 import { initializePrices } from "../generals/functions";
 import { Coin } from "@prisma/client";
+import { PortfolioListProps } from "../typescript/interfaces";
 
-const PortfolioList = ({ coins }) => {
-  const [update, setUpdate] = React.useState<number | string>(10);
-  const [updatingCoins, setUpdatingCoins] = React.useState<boolean>(false);
+const PortfolioList: React.FC<PortfolioListProps> = ({ coins }) => {
+  const [update, setUpdate] = React.useState<number>(180);
 
   React.useEffect(() => {
     update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
     if (update <= 0) {
       setTimeout(() => {
-        setUpdate(10);
+        setUpdate(180);
       }, 1000);
     }
   }, [update]);

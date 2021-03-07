@@ -6,8 +6,9 @@ import {
   renderMarketChange,
 } from "../generals/functions";
 import { fetchPrice } from "../pages/api/FetchPrice";
+import { PortfolioCoinProps } from "../typescript/interfaces";
 
-const PortfolioCoin = ({ coin, update, setUpdate }) => {
+const PortfolioCoin: React.FC<PortfolioCoinProps> = ({ coin, update }) => {
   const [price, setPrice] = React.useState<null | number>(
     coin.market_data.current_price.usd
   );
