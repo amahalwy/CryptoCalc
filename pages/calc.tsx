@@ -1,9 +1,8 @@
 import React from "react";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import SearchForm from "../components/SearchForm";
 import SearchCoin from "../components/SearchCoin";
 import Watchlist from "../components/Watchlist";
-import RunningTotal from "../components/RunningTotal";
 
 const Calc = () => {
   const [coin, setCoin] = React.useState<null | any>(null);
@@ -17,11 +16,11 @@ const Calc = () => {
     <Box h="100%" w="100%">
       <Box w="60%" m="4% auto" pb="2%">
         <Box mb="10px">
-          <Heading fontSize={54} color="orange">
+          <Heading fontSize={54} color="orange.400">
             CryptoCalc
           </Heading>
-          <Heading fontSize={24} color="orange.300">
-            The quick and easy way to get Crypto Currency prices
+          <Heading fontSize={24} color="orange.400">
+            How much can you make with 1 million?
           </Heading>
         </Box>
         <Box bg="white">
@@ -47,8 +46,6 @@ const Calc = () => {
                 total={total}
                 calculatingTotal={calculatingTotal}
               />
-
-              {/* <SaveListForm watchlist={watchlist} /> */}
             </Box>
           ) : null}
         </Box>
