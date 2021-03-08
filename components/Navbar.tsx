@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Heading,
   Menu,
   MenuButton,
   MenuItem,
@@ -13,9 +14,19 @@ const Navbar = () => {
   const router = useRouter();
   return (
     <Box w="100%" h="60px" bg="orange.400">
-      <Box d="flex" justifyContent="flex-end" p="10px 20px">
+      <Box d="flex" justifyContent="space-between">
+        <Heading
+          m={{ base: "10px 20px", lg: "5px 20px" }}
+          color="#1A365D"
+          _hover={{ cursor: "pointer", color: "white" }}
+          onClick={() => router.push("/")}
+        >
+          CryptoCalc
+        </Heading>
         <Menu>
-          <MenuButton as={Button}>Menu</MenuButton>
+          <MenuButton m="10px 20px" as={Button}>
+            Menu
+          </MenuButton>
           <MenuList>
             <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
             <MenuItem onClick={() => router.push("/calc")}>Calculator</MenuItem>

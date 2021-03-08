@@ -4,7 +4,8 @@ import { Box, Spinner, Text } from "@chakra-ui/react";
 const ShowStatus: React.FC<{
   state: {
     loading?: boolean;
-    value: object | any;
+    error?: object | undefined;
+    value?: object | any;
   };
 }> = ({ state }) => {
   if (state.loading) {

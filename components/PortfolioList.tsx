@@ -1,8 +1,6 @@
 import React from "react";
-import { Box, CircularProgress, Heading, Text } from "@chakra-ui/react";
+import { Box, CircularProgress, Heading } from "@chakra-ui/react";
 import PortfolioCoin from "./PortfolioCoin";
-import { initializePrices } from "../generals/functions";
-import { Coin } from "@prisma/client";
 import { PortfolioListProps } from "../typescript/interfaces";
 
 const PortfolioList: React.FC<PortfolioListProps> = ({ coins }) => {

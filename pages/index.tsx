@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, HStack, VStack, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 const Feature: React.FC<{
@@ -11,14 +11,15 @@ const Feature: React.FC<{
   return (
     <Box
       p={5}
-      shadow="md"
-      borderWidth="1px"
-      flex="1"
-      borderRadius="md"
-      h="90%"
+      w={{ base: "100%", lg: "45%" }}
+      h={{ base: "100%", lg: "430px", xl: "320px" }}
       bg="white"
-      {...rest}
+      shadow="md"
       cursor="pointer"
+      borderWidth="1px"
+      borderRadius="md"
+      mb={{ base: "20px", lg: "0" }}
+      {...rest}
     >
       <Heading fontSize={{ base: 30, lg: 40 }}>{title}</Heading>
       <Text mt={4} fontSize={{ base: 14, lg: 20 }}>
@@ -35,12 +36,12 @@ const StackEx = () => {
   const router = useRouter();
   return (
     <Box
-      d={{ base: "block", lg: "flex" }}
-      spacing={8}
-      alignItems="center"
       h="100%"
-      w={{ base: "90%", lg: "100%" }}
       m="0 auto"
+      alignItems="center"
+      justifyContent="space-between"
+      w={{ base: "90%", lg: "80%" }}
+      d={{ base: "block", lg: "flex" }}
     >
       <Feature
         title="Cryptocurrency Calculator"
@@ -60,7 +61,8 @@ const StackEx = () => {
 
 const Home = () => {
   return (
-    <Box m="10% auto" w="100%">
+    <Box m={{ base: "6% auto", lg: "10% auto" }} w="100%">
+      <LeaderBoards />
       <StackEx />
     </Box>
   );
