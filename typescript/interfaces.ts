@@ -1,7 +1,7 @@
 export interface User {
   id: string;
   name: string;
-  otp: string;
+  otp?: string;
 }
 
 export interface Coin {
@@ -17,9 +17,10 @@ export interface List {
   active: boolean;
   startDate: string;
   endDate: string;
-  owner: User;
+  owner?: User;
   coins: Coin[];
   total: number;
+  currentTotal?: number;
 }
 
 export interface ListCoinProps {

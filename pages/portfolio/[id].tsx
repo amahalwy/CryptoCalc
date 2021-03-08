@@ -63,7 +63,7 @@ const PortfolioPage = (props: { list: List }) => {
     }
 
     timerComponents.push(
-      <TimerComponent interval={interval} timeLeft={timeLeft} />
+      <TimerComponent key={interval} interval={interval} timeLeft={timeLeft} />
     );
   });
 

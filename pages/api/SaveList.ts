@@ -35,6 +35,7 @@ const saveList = async (req, res) => {
         startDate: start,
         endDate: end,
         total,
+        currentTotal: total,
       },
     });
 
@@ -45,6 +46,7 @@ const saveList = async (req, res) => {
             name: coin.name,
             listId: newList.id,
             quantity: coin.quantity || 0,
+            price: coin.market_data.current_price.usd,
           },
         });
       })
@@ -75,7 +77,8 @@ const saveList = async (req, res) => {
 
     return res.status(200).json(response);
   } catch (err) {
-    return res.status(400).json({ ErrorCode: err.code });
+    console.log(err);
+    return res.status(400).json(err);
   }
 };
 

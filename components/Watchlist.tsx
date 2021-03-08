@@ -77,7 +77,7 @@ const Watchlist: React.FC<WatchlistProps> = ({
         {update > 0 ? "s" : null}
       </Text>
       <Form
-        onSubmit={() => null}
+        onSubmit={onSubmit}
         mutators={{
           removeField,
         }}

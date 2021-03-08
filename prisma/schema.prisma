@@ -22,13 +22,15 @@ model List {
   endDate   String 
   owner     User     @relation(fields: [userId], references: [id])
   coins     Coin[]
-  total Int
+  total Float
+  currentTotal Float
 }
 
 model Coin {
   id     Int    @id @default(autoincrement())
   name   String
   listId String
-  quantity Int 
+  quantity Float 
+  price Float
   List   List   @relation(fields: [listId], references: [id])
 }

@@ -3,7 +3,7 @@ export const fetchList = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
-    method: "POST",
+    method: "GET",
     body: JSON.stringify(data),
   });
 
