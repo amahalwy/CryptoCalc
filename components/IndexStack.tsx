@@ -43,14 +43,14 @@ const StackEx = () => {
       d="block"
     >
       <Feature
-        title="Cryptocurrency Calculator"
+        title="New Portfolio"
         desc="Create a portfolio with available crypto currencies and a $1 million budget. How much money can you make?"
         desc2="Get started here and challenge the leaderboards!"
         onClick={() => router.push("calc")}
         mb="20px"
       />
       <Feature
-        title="Cryptocurrency Portfolio"
+        title="Portfolio Search"
         desc="See how you wage against others. If you've already made a portfolio, check out how much you've made so far!"
         desc2="You have 3 total days before a final value change is registered. Goodluck!"
         onClick={() => router.push("portfolio")}

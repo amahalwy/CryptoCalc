@@ -18,7 +18,7 @@ const SearchCoin: React.FC<SearchCoinProps> = ({
   };
 
   return (
-    <Box w="96%" m="0 auto" borderBottom="1px solid #ccc" pb="10px">
+    <Box w="96%" m="0 auto" borderBottom="1px solid #ccc">
       <Box>
         <Box d="flex" justifyContent="space-between" alignItems="center">
           <Box d="flex">

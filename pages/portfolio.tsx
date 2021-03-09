@@ -64,7 +64,6 @@ const Search: React.FC<{
   React.useEffect(() => {
     if (data) {
       fetch().then((res) => {
-        console.log(res);
         res === "Error: List not found" || res === "Internal Server Error"
           ? null
           : setTimeout(() => {
@@ -94,7 +93,6 @@ const Search: React.FC<{
 const Porfolio = () => {
   const [formData, setFormData] = React.useState<object | null>(null);
   const onSubmit = (values: { username: string }) => {
-    console.log(values);
     const data: { name: string } = {
       name: values.username,
     };

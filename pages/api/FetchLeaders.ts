@@ -47,11 +47,11 @@ const fetchLeaders = async (req, res) => {
                   },
                 },
                 currentTotal: Number(newTotal.toFixed(2)),
-                percentChange: diff,
+                percentChange: Number((diff / list.total).toFixed(4)),
               },
             });
           } catch (error) {
-            console.log(error);
+            res.status(400).json(error);
           }
         });
         try {
@@ -64,7 +64,7 @@ const fetchLeaders = async (req, res) => {
             },
           });
         } catch (error) {
-          console.log(error);
+          res.status(400).json(error);
         }
       })
     );
@@ -73,7 +73,7 @@ const fetchLeaders = async (req, res) => {
   const lists = await prisma.list.findMany({
     take: 10,
     orderBy: {
-      currentTotal: "desc",
+      percentChange: "desc",
     },
     include: {
       coins: true,

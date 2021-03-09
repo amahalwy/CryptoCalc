@@ -16,7 +16,7 @@ export const getServerSideProps = async ({ params }) => {
 const Home = (props) => {
   return (
     <Box
-      m={{ base: "6% auto", lg: "10% auto" }}
+      m={{ base: "6% auto", lg: "4% auto" }}
       w="95%"
       d={{ base: "block", lg: "flex" }}
     >

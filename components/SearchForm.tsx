@@ -51,7 +51,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
                 </FormControl>
               )}
             />
-            <Box p="10px 0 ">
+            <Box p="2% 0">
               <Button
                 type="submit"
                 colorScheme="blue"

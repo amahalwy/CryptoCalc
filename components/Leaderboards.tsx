@@ -1,5 +1,15 @@
 import React from "react";
-import { Box, Heading } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Heading,
+  ListItem,
+  OrderedList,
+} from "@chakra-ui/react";
 import { fetchLeaders } from "../util/FetchLeaders";
 import { List } from "../typescript/interfaces";
 import LeaderBoardList from "./LeaderBoardItem";
@@ -41,14 +51,22 @@ const LeaderBoards: React.FC<{ topLists: List[] }> = ({ topLists }) => {
       minH={{ base: "100%", lg: "430px", xl: "320px" }}
     >
       <Box w="100%">
-        <Heading fontSize={34} color="orange.400">
+        <Heading fontSize={{ base: 30, lg: 40 }} color="orange.400">
           Current Leaderboards
         </Heading>
       </Box>
-      <Box>
-        {topLists.map((list, i) => {
-          return <LeaderBoardList list={list} key={i} position={i} />;
-        })}
+      <Box
+        p={{ base: "0", lg: "20px" }}
+        maxH={{ base: "200px" }}
+        overflow="scroll"
+      >
+        <Accordion allowToggle>
+          <OrderedList spacing={6} p={2}>
+            {topLists.map((list, i) => {
+              return <LeaderBoardList list={list} key={i} />;
+            })}
+          </OrderedList>
+        </Accordion>
       </Box>
     </Box>
   );
