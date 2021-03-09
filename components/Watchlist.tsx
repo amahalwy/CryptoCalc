@@ -25,18 +25,28 @@ const Watchlist: React.FC<WatchlistProps> = ({
   setWatchlist,
   setCalculatingTotal,
 }) => {
-  const [update, setUpdate] = React.useState<number | string>(180);
   const [updatingCoins, setUpdatingCoins] = React.useState<boolean>(false);
   const [formData, setFormData] = React.useState<SubmitData | null>(null);
+  const [update, setUpdate] = React.useState<number | null>(null);
 
   React.useEffect(() => {
-    update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
-    if (update <= 0) {
+    if (localStorage && !localStorage.cryptoCalcUpdate && !update) {
+      localStorage.setItem("cryptoCalcUpdate", JSON.stringify(180));
+    }
+    setUpdate(JSON.parse(localStorage.cryptoCalcUpdate));
+    update > 0 &&
+      update !== null &&
+      setTimeout(() => {
+        const newUpdate = Number(update) - 1;
+        setUpdate(newUpdate);
+        localStorage.setItem("cryptoCalcUpdate", JSON.stringify(newUpdate));
+      }, 1000);
+    if (update <= 0 && update !== null) {
       updateList();
-      setUpdate("restarting...");
       setTimeout(() => {
         setUpdate(180);
-      }, 2000);
+        localStorage.setItem("cryptoCalcUpdate", JSON.stringify(180));
+      }, 1000);
     }
   }, [update]);
 

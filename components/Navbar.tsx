@@ -12,6 +12,11 @@ import React from "react";
 
 const Navbar = () => {
   const router = useRouter();
+  React.useEffect(() => {
+    if (!localStorage.cryptoCalcUpdate) {
+      localStorage.setItem("cryptoCalcUpdate", JSON.stringify(180));
+    }
+  }, []);
   return (
     <Box w="100%" h="60px" bg="orange.400">
       <Box d="flex" justifyContent="space-between">

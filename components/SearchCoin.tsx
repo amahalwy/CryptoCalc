@@ -28,7 +28,7 @@ const SearchCoin: React.FC<SearchCoinProps> = ({
             >
               <Image
                 src={coin.image.small}
-                h={{ base: "30px", sm: "35px", lg: "90%" }}
+                h={{ base: "30px", sm: "35px", lg: "80%" }}
               />
             </Box>
             <Box d="flex">
@@ -50,7 +50,7 @@ const SearchCoin: React.FC<SearchCoinProps> = ({
             <Button
               onClick={() => addToWatchlist(coin)}
               disabled={findInList(watchlist, coin)}
-              p="0 6px"
+              p="0 10px"
             >
               Add to watchlist
             </Button>

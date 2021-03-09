@@ -25,6 +25,12 @@ const fetchLeaders = async (req, res) => {
         await fetchPrice(coin.name).then(async (res) => {
           newTotal += res[coin.name.toLowerCase()].usd * coin.quantity;
           try {
+            let diff: number = 0;
+            if (newTotal > list.total) {
+              diff = newTotal - list.total;
+            } else {
+              diff = list.total - newTotal;
+            }
             await prisma.list.update({
               where: {
                 id: list.id,
@@ -40,7 +46,8 @@ const fetchLeaders = async (req, res) => {
                     },
                   },
                 },
-                currentTotal: newTotal,
+                currentTotal: Number(newTotal.toFixed(2)),
+                percentChange: diff,
               },
             });
           } catch (error) {
@@ -70,6 +77,7 @@ const fetchLeaders = async (req, res) => {
     },
     include: {
       coins: true,
+      owner: true,
     },
   });
 

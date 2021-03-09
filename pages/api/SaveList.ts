@@ -36,6 +36,7 @@ const saveList = async (req, res) => {
         endDate: end,
         total,
         currentTotal: total,
+        percentChange: 0,
       },
     });
 

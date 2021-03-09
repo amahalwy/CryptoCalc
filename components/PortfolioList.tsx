@@ -4,13 +4,24 @@ import PortfolioCoin from "./PortfolioCoin";
 import { PortfolioListProps } from "../typescript/interfaces";
 
 const PortfolioList: React.FC<PortfolioListProps> = ({ coins }) => {
-  const [update, setUpdate] = React.useState<number>(180);
+  const [update, setUpdate] = React.useState<number | null>(null);
 
   React.useEffect(() => {
-    update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
-    if (update <= 0) {
+    if (localStorage && !localStorage.cryptoCalcUpdate && !update) {
+      localStorage.setItem("cryptoCalcUpdate", JSON.stringify(180));
+    }
+    setUpdate(JSON.parse(localStorage.cryptoCalcUpdate));
+    update > 0 &&
+      update !== null &&
+      setTimeout(() => {
+        const newUpdate = Number(update) - 1;
+        setUpdate(newUpdate);
+        localStorage.setItem("cryptoCalcUpdate", JSON.stringify(newUpdate));
+      }, 1000);
+    if (update <= 0 && update !== null) {
       setTimeout(() => {
         setUpdate(180);
+        localStorage.setItem("cryptoCalcUpdate", JSON.stringify(180));
       }, 1000);
     }
   }, [update]);
@@ -18,7 +29,7 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ coins }) => {
   return (
     <Box>
       <Box m="10px 0">
-        {update > 0 ? (
+        {update > 0 && update ? (
           <Heading>
             Refreshing prices in: {update}
             {update > 0 ? "s" : null}

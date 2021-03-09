@@ -13,25 +13,29 @@ const ShowStatus: React.FC<{
 
   if (state.loading) {
     return (
-      <Box>
+      <Box m="10px 0">
         <Spinner />
       </Box>
     );
-  } else if (state.value && state.value.ErrorCode) {
-    return (
-      <Box>
-        <Text fontSize={20} color="red">
-          Username taken
-        </Text>
-      </Box>
-    );
-  } else if (state.value && !state.value.ErrorCode) {
-    setTimeout(() => {
-      router.push(`/portfolio/${state.value.id}`);
-    }, 2000);
-    return <Box>OTP for login with username: {state.value.otp}</Box>;
   } else {
-    return null;
+    if (state.value && state.value.code === "P2002") {
+      return (
+        <Box>
+          <Text fontSize={20} color="red">
+            Username taken
+          </Text>
+        </Box>
+      );
+    } else if (state.value && !state.value.code) {
+      setTimeout(() => {
+        router.push(`/portfolio/${state.value.id}`);
+      }, 2000);
+      return (
+        <Box color="green">Successfully saved your list! Redirecting...</Box>
+      );
+    } else {
+      return null;
+    }
   }
 };
 

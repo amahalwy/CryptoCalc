@@ -43,7 +43,6 @@ export const getServerSideProps = async ({ params }) => {
 const PortfolioPage = (props: { list: List }) => {
   const list = props.list;
   const [localCoins, setLocalCoins] = React.useState<null | Coin[]>(null);
-
   const [timeLeft, setTimeLeft] = React.useState<timeleft>(
     getTimeRemaining(list.endDate)
   );

@@ -24,7 +24,7 @@ const ShowStatus: React.FC<{
 }> = ({ state }) => {
   if (state.loading) {
     return (
-      <Box>
+      <Box mb="20px">
         <Spinner />
       </Box>
     );
@@ -34,12 +34,16 @@ const ShowStatus: React.FC<{
     state.value === "Internal server error"
   ) {
     return (
-      <Box color="red" mb="10px">
+      <Box color="red" mb="20px">
         Error: Couldn't find your list
       </Box>
     );
   } else if (state.value && state.value !== "Error: List not found") {
-    return <Box>Found your Portfolio! Redirecting... </Box>;
+    return (
+      <Box color="green" mb="20px">
+        Found your Portfolio! Redirecting...{" "}
+      </Box>
+    );
   } else {
     return null;
   }
@@ -60,7 +64,8 @@ const Search: React.FC<{
   React.useEffect(() => {
     if (data) {
       fetch().then((res) => {
-        res === "Error: List not found"
+        console.log(res);
+        res === "Error: List not found" || res === "Internal Server Error"
           ? null
           : setTimeout(() => {
               router.push(`/portfolio/${res}`);
