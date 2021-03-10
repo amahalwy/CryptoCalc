@@ -7,6 +7,13 @@ import LeaderBoards from "../components/LeaderBoard";
 
 export const getServerSideProps = async () => {
   const lists: List[] = await fetchLeaders();
+
+  if (!lists) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       lists,
