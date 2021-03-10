@@ -24,10 +24,12 @@ const ListCoin: React.FC<ListCoinProps> = ({
   setWatchlist,
 }) => {
   const findAndRemove = () => {
-    const id = watchlist.findIndex((item: any) => item.id === coin.id);
-    const newList = watchlist.slice(0, id).concat(watchlist.slice(id + 1));
+    const id: number = watchlist.findIndex((item: any) => item.id === coin.id);
+    const newList: any[] = watchlist
+      .slice(0, id)
+      .concat(watchlist.slice(id + 1));
     setWatchlist(newList);
-    const name = coin.id;
+    const name: string = coin.id;
     form.mutators.removeField(name);
   };
 

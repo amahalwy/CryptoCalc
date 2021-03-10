@@ -1,10 +1,11 @@
 import { Box, Button } from "@chakra-ui/react";
 import React from "react";
 import useAsyncFn from "react-use/lib/useAsyncFn";
+import { SaveListBottomProps } from "../typescript/interfaces";
 import { saveList } from "../util/SaveList";
 import ShowStatus from "./ShowStatus";
 
-const SaveListBottom = ({ data, total }) => {
+const SaveListBottom: React.FC<SaveListBottomProps> = ({ data, total }) => {
   const [state, fetch] = useAsyncFn(async () => {
     const response = await saveList(data);
     const result = await response;

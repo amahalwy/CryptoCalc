@@ -20,15 +20,18 @@ model List {
   active    Boolean  @default(true)
   startDate String 
   endDate   String 
-  owner     User     @relation(fields: [userId], references: [id])
+  total Float
+  currentTotal Float
+  percentChange Float
   coins     Coin[]
-  total Int
+  owner     User     @relation(fields: [userId], references: [id])
 }
 
 model Coin {
   id     Int    @id @default(autoincrement())
   name   String
   listId String
-  quantity Int 
+  quantity Float 
+  price Float
   List   List   @relation(fields: [listId], references: [id])
 }

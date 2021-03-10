@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { List, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 const fetchList = async (req, res) => {
-  const list = await prisma.list.findFirst({
+  const list: List = await prisma.list.findFirst({
     where: {
       owner: {
         name: req.body.name,

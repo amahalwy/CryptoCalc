@@ -15,7 +15,7 @@ import RunningTotal from "./RunningTotal";
 import SaveListBottom from "./SaveListBottom";
 import { required } from "../generals/validations";
 import { Coin, WatchlistProps } from "../typescript/interfaces";
-import { SubmitData } from "../typescript/watchlistInterfaces";
+import { SubmitData } from "../typescript/interfaces";
 
 const Watchlist: React.FC<WatchlistProps> = ({
   total,
@@ -25,31 +25,39 @@ const Watchlist: React.FC<WatchlistProps> = ({
   setWatchlist,
   setCalculatingTotal,
 }) => {
-  const [update, setUpdate] = React.useState<number | string>(180);
   const [updatingCoins, setUpdatingCoins] = React.useState<boolean>(false);
   const [formData, setFormData] = React.useState<SubmitData | null>(null);
+  const [update, setUpdate] = React.useState<number | null>(null);
 
   React.useEffect(() => {
-    update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
-    if (update <= 0) {
+    if (localStorage && !localStorage.cryptoCalcUpdate && !update) {
+      localStorage.setItem("cryptoCalcUpdate", JSON.stringify(180));
+    }
+    setUpdate(JSON.parse(localStorage.cryptoCalcUpdate));
+    update > 0 &&
+      update !== null &&
+      setTimeout(() => {
+        const newUpdate = Number(update) - 1;
+        setUpdate(newUpdate);
+        localStorage.setItem("cryptoCalcUpdate", JSON.stringify(newUpdate));
+      }, 1000);
+    if (update <= 0 && update !== null) {
       updateList();
-      setUpdate("restarting...");
       setTimeout(() => {
         setUpdate(180);
-      }, 2000);
+        localStorage.setItem("cryptoCalcUpdate", JSON.stringify(180));
+      }, 1000);
     }
   }, [update]);
 
   const updateList = async () => {
-    setUpdatingCoins(true);
     const clone: Coin[] = watchlist.slice();
-    watchlist.map((coin: Coin, i) => {
+    watchlist.map((coin: object | any, i) => {
       return fetchCoin(coin.id).then((res: any) => {
         clone[i] = res;
         setWatchlist(clone);
       });
     });
-    setUpdatingCoins(false);
   };
 
   const save = async (values) => {};
@@ -106,11 +114,7 @@ const Watchlist: React.FC<WatchlistProps> = ({
                 );
               })}
             </Box>
-            <RunningTotal
-              total={total}
-              calculatingTotal={calculatingTotal}
-              setCalculatingTotal={setCalculatingTotal}
-            />
+            <RunningTotal total={total} calculatingTotal={calculatingTotal} />
             <Field
               name="username"
               validate={required}

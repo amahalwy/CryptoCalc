@@ -1,19 +1,26 @@
 import React from "react";
 import { Box, Heading } from "@chakra-ui/react";
-import { PrismaClient } from "@prisma/client";
+import { Coin, PrismaClient } from "@prisma/client";
 import CountDown from "../../components/CountDown";
 import { getTimeRemaining, initializePrices } from "../../generals/functions";
 import TimerComponent from "../../components/TimerComponent";
 import PortfolioList from "../../components/PortfolioList";
 import PortfolioTotal from "../../components/PortfolioTotal";
+import {
+  List,
+  timeleft,
+  TimerComponentProps,
+} from "../../typescript/interfaces";
 
 export const getServerSideProps = async ({ params }) => {
-  const list = await prisma.list.findUnique({
+  const prisma = new PrismaClient();
+  const list: List = await prisma.list.findUnique({
     where: {
       id: params.id,
     },
     include: {
       coins: true,
+      owner: true,
     },
   });
 
@@ -33,11 +40,10 @@ export const getServerSideProps = async ({ params }) => {
   };
 };
 
-const PortfolioPage = (props) => {
+const PortfolioPage = (props: { list: List }) => {
   const list = props.list;
-  const [localCoins, setLocalCoins] = React.useState(null);
-
-  const [timeLeft, setTimeLeft] = React.useState(
+  const [localCoins, setLocalCoins] = React.useState<null | Coin[]>(null);
+  const [timeLeft, setTimeLeft] = React.useState<timeleft>(
     getTimeRemaining(list.endDate)
   );
 
@@ -48,7 +54,7 @@ const PortfolioPage = (props) => {
     return () => clearTimeout(timer);
   });
 
-  const timerComponents = [];
+  const timerComponents: any[] = [];
 
   Object.keys(timeLeft).forEach((interval) => {
     if (timeLeft[interval] === undefined || timeLeft[interval] === null) {
@@ -56,7 +62,7 @@ const PortfolioPage = (props) => {
     }
 
     timerComponents.push(
-      <TimerComponent interval={interval} timeLeft={timeLeft} />
+      <TimerComponent key={interval} interval={interval} timeLeft={timeLeft} />
     );
   });
 
@@ -93,7 +99,5 @@ const PortfolioPage = (props) => {
     </Box>
   );
 };
-
-const prisma = new PrismaClient();
 
 export default PortfolioPage;

@@ -3,17 +3,22 @@ import { Box, Button, Image, Text } from "@chakra-ui/react";
 import { findInList } from "../generals/functions";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import SearchCoinData from "./SearchCoinData";
+import { SearchCoinProps } from "../typescript/interfaces";
 
-const SearchCoin = ({ coin, watchlist, setWatchlist }) => {
+const SearchCoin: React.FC<SearchCoinProps> = ({
+  coin,
+  watchlist,
+  setWatchlist,
+}) => {
   const [showMore, setShowMore] = React.useState<boolean>(false);
 
   const addToWatchlist = (coin) => {
-    const newList = watchlist.concat(coin);
+    const newList: any[] = watchlist.concat(coin);
     setWatchlist(newList);
   };
 
   return (
-    <Box w="96%" m="0 auto" borderBottom="1px solid #ccc" pb="10px">
+    <Box w="96%" m="0 auto" borderBottom="1px solid #ccc">
       <Box>
         <Box d="flex" justifyContent="space-between" alignItems="center">
           <Box d="flex">
@@ -23,7 +28,7 @@ const SearchCoin = ({ coin, watchlist, setWatchlist }) => {
             >
               <Image
                 src={coin.image.small}
-                h={{ base: "30px", sm: "35px", lg: "90%" }}
+                h={{ base: "30px", sm: "35px", lg: "80%" }}
               />
             </Box>
             <Box d="flex">
@@ -45,7 +50,7 @@ const SearchCoin = ({ coin, watchlist, setWatchlist }) => {
             <Button
               onClick={() => addToWatchlist(coin)}
               disabled={findInList(watchlist, coin)}
-              p="0 6px"
+              p="0 10px"
             >
               Add to watchlist
             </Button>

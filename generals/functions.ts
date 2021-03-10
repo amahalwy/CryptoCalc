@@ -10,6 +10,10 @@ export const renderChangeColor = (coin: any) => {
   return coin.market_data.price_change_24h > 0 ? "green" : "red";
 };
 
+export const renderChangePercent = (value) => {
+  return value > 0 ? "green" : "red";
+};
+
 export const findInList = (watchlist: Coin[], coin: Coin) => {
   const result = watchlist.find((item) => item.id === coin.id);
   if (!result) return false;
