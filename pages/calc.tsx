@@ -14,8 +14,14 @@ const Calc: React.FC = () => {
 
   return (
     <Box h="100%" w="100%">
-      <Box w={{ base: "90%", lg: "60%" }} m="4% auto" bg="white">
-        <Box mb="10px">
+      <Box
+        w={{ base: "90%", lg: "60%" }}
+        m="4% auto"
+        bg="white"
+        borderWidth="1px"
+        borderRadius="md"
+      >
+        <Box m="10px 0">
           <Box ml="1%">
             <Heading fontSize={{ base: 44, lg: 54 }} color="orange.400">
               CryptoCalc
