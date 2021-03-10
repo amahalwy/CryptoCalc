@@ -26,6 +26,7 @@ const LeaderBoards: React.FC<{ topLists: List[] }> = ({ topLists }) => {
     }
   }, [update]);
 
+  if (!topLists) return null;
   return (
     <Box
       order={2}
