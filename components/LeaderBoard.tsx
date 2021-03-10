@@ -26,7 +26,6 @@ const LeaderBoards: React.FC<{ topLists: List[] }> = ({ topLists }) => {
     }
   }, [update]);
 
-  if (!topLists.length) return null;
   return (
     <Box
       order={2}
@@ -50,13 +49,17 @@ const LeaderBoards: React.FC<{ topLists: List[] }> = ({ topLists }) => {
         maxH={{ base: "200px", lg: "800px" }}
         overflow="scroll"
       >
-        <Accordion allowToggle>
-          <OrderedList spacing={6} p={2}>
-            {topLists.map((list, i) => {
-              return <LeaderBoardList list={list} key={i} />;
-            })}
-          </OrderedList>
-        </Accordion>
+        {!topLists.length ? (
+          <Box>No leaders yet. Create a portfolio and lead the pack! </Box>
+        ) : (
+          <Accordion allowToggle>
+            <OrderedList spacing={6} p={2}>
+              {topLists.map((list, i) => {
+                return <LeaderBoardList list={list} key={i} />;
+              })}
+            </OrderedList>
+          </Accordion>
+        )}
       </Box>
     </Box>
   );
