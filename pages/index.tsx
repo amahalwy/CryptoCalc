@@ -2,8 +2,8 @@ import React from "react";
 import { Box } from "@chakra-ui/react";
 import StackEx from "../components/IndexStack";
 import { fetchLeaders } from "../util/FetchLeaders";
-import LeaderBoards from "../components/LeaderBoards";
 import { List } from "../typescript/interfaces";
+import LeaderBoards from "../components/LeaderBoard";
 
 export const getServerSideProps = async () => {
   const lists: List[] = await fetchLeaders();
