@@ -72,18 +72,21 @@ const fetchLeaders = async (req, res) => {
     );
   });
 
-  const lists = await prisma.list.findMany({
-    take: 10,
-    orderBy: {
-      percentChange: "desc",
-    },
-    include: {
-      coins: true,
-      owner: true,
-    },
-  });
-
-  return res.json(lists);
+  try {
+    const lists = await prisma.list.findMany({
+      take: 10,
+      orderBy: {
+        percentChange: "desc",
+      },
+      include: {
+        coins: true,
+        owner: true,
+      },
+    });
+    return res.json(lists);
+  } catch (error) {
+    res.status(400).json(error);
+  }
 };
 
 export default fetchLeaders;
