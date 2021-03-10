@@ -21,8 +21,7 @@ export const getServerSideProps = async () => {
   };
 };
 
-const Home = (props: { lists: List[] }) => {
-  const lists = props.lists;
+const Home = (props) => {
   return (
     <Box
       m={{ base: "6% auto", lg: "4% auto" }}

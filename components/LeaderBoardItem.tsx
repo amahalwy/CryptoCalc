@@ -51,9 +51,9 @@ const LeaderBoardItem = ({ list }) => {
           <Box>Coins: </Box>
           {list.coins.map((coin, i) => {
             return (
-              <Box d="flex" w="100px" justifyContent="space-between">
-                <Box>{coin.name}</Box>
-                <Box>x{coin.quantity}</Box>
+              <Box d="flex" key={i}>
+                <Box mr="10px">{coin.name}</Box>
+                <Box>x{numberWithCommas(coin.quantity)}</Box>
               </Box>
             );
           })}

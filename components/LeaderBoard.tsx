@@ -46,7 +46,7 @@ const LeaderBoards: React.FC<{ topLists: List[] }> = ({ topLists }) => {
       </Box>
       <Box
         p={{ base: "0", lg: "20px" }}
-        maxH={{ base: "200px" }}
+        maxH={{ base: "200px", lg: "800px" }}
         overflow="scroll"
       >
         <Accordion allowToggle>
