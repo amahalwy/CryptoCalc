@@ -42,7 +42,9 @@ const fetchLeaders = async (req, res) => {
                       id: coin.id,
                     },
                     data: {
-                      price: Number(res[coin.name.toLowerCase()].usd),
+                      price: {
+                        set: Number(res[coin.name.toLowerCase()].usd),
+                      },
                     },
                   },
                 },
