@@ -14,18 +14,20 @@ import AutoSave from "./AutoSave";
 import RunningTotal from "./RunningTotal";
 import SaveListBottom from "./SaveListBottom";
 import { required } from "../generals/validations";
+import { Coin, WatchlistProps } from "../typescript/interfaces";
+import { SubmitData } from "../typescript/watchlistInterfaces";
 
-const Watchlist = ({
-  watchlist,
-  setWatchlist,
+const Watchlist: React.FC<WatchlistProps> = ({
   total,
-  setTotal,
+  watchlist,
   calculatingTotal,
+  setTotal,
+  setWatchlist,
   setCalculatingTotal,
 }) => {
   const [update, setUpdate] = React.useState<number | string>(180);
   const [updatingCoins, setUpdatingCoins] = React.useState<boolean>(false);
-  const [formData, setFormData] = React.useState<object | null>(null);
+  const [formData, setFormData] = React.useState<SubmitData | null>(null);
 
   React.useEffect(() => {
     update > 0 && setTimeout(() => setUpdate(Number(update) - 1), 1000);
@@ -40,9 +42,9 @@ const Watchlist = ({
 
   const updateList = async () => {
     setUpdatingCoins(true);
-    const clone = watchlist.slice();
-    await watchlist.map((coin, i) => {
-      fetchCoin(coin.id).then((res) => {
+    const clone: Coin[] = watchlist.slice();
+    watchlist.map((coin: Coin, i) => {
+      return fetchCoin(coin.id).then((res: any) => {
         clone[i] = res;
         setWatchlist(clone);
       });
@@ -58,10 +60,10 @@ const Watchlist = ({
   };
 
   const onSubmit = (values) => {
-    watchlist.map((coin) => {
+    watchlist.map((coin: Coin) => {
       coin.quantity = Number(values[coin.id]);
     });
-    const data = {
+    const data: SubmitData = {
       name: values.username,
       coins: watchlist,
       active: values.active,
@@ -70,16 +72,9 @@ const Watchlist = ({
     setFormData(data);
   };
 
-  const getTotal = () => {
-    if (!watchlist || watchlist.length === 0) return null;
-    return watchlist.reduce((acc, curr) => {
-      return acc + curr.market_data.current_price.usd;
-    }, 0);
-  };
-
   return (
     <Box w="96%" m="0 auto">
-      <Text fontSize={24} m="20px 0" w="98%">
+      <Text fontSize={{ base: 18, lg: 24 }} m="20px 0" w="98%">
         Coins data refreshing in: {update}
         {update > 0 ? "s" : null}
       </Text>
@@ -97,7 +92,6 @@ const Watchlist = ({
               setTotal={setTotal}
               watchlist={watchlist}
               setCalculatingTotal={setCalculatingTotal}
-              // values
             />
             <Box maxH="250px" overflow="scroll" m="0 auto">
               {watchlist.map((coin, i) => {
@@ -126,7 +120,7 @@ const Watchlist = ({
                     <Input
                       borderRadius="0"
                       borderBottom="1px solid #ccc"
-                      fontSize={30}
+                      fontSize={{ base: 24, lg: 30 }}
                       w="100%"
                       id="username"
                       h="3.68rem"

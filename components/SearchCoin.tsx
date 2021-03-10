@@ -17,18 +17,24 @@ const SearchCoin = ({ coin, watchlist, setWatchlist }) => {
       <Box>
         <Box d="flex" justifyContent="space-between" alignItems="center">
           <Box d="flex">
-            <Box mr="10px" mt="15px">
-              <Image src={coin.image.small} />
+            <Box
+              mr={{ base: "4px", lg: "10px" }}
+              mt={{ base: "", sm: "10px", lg: "15px" }}
+            >
+              <Image
+                src={coin.image.small}
+                h={{ base: "30px", sm: "35px", lg: "90%" }}
+              />
             </Box>
             <Box d="flex">
-              <Text d="inline" fontSize={50} mr="4px">
+              <Text d="inline" fontSize={{ base: 20, sm: 34, lg: 50 }} mr="4px">
                 {coin.name}
               </Text>
               <Box
-                mt="30px"
+                mt={{ base: "6px", sm: "15px", lg: "30px" }}
                 _hover={{ cursor: "pointer" }}
                 onClick={() => setShowMore(!showMore)}
-                fontSize={26}
+                fontSize={{ base: 18, lg: 26 }}
               >
                 <AiOutlineInfoCircle />
               </Box>
@@ -39,6 +45,7 @@ const SearchCoin = ({ coin, watchlist, setWatchlist }) => {
             <Button
               onClick={() => addToWatchlist(coin)}
               disabled={findInList(watchlist, coin)}
+              p="0 6px"
             >
               Add to watchlist
             </Button>

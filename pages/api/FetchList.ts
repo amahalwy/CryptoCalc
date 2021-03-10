@@ -6,7 +6,7 @@ const fetchList = async (req, res) => {
   const list = await prisma.list.findFirst({
     where: {
       owner: {
-        otp: req.body.otp,
+        name: req.body.name,
       },
     },
     include: {

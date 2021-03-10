@@ -37,7 +37,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
                     <Input
                       borderRadius="0"
                       borderBottom="1px solid #ccc"
-                      fontSize={30}
+                      fontSize={{ base: 24, lg: 30 }}
                       w="100%"
                       id="crypto"
                       h="3.68rem"

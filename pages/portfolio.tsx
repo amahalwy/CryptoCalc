@@ -35,7 +35,7 @@ const ShowStatus = ({ state }) => {
   }
 };
 
-const Save = ({ data, pristine, form }) => {
+const Search = ({ data, pristine, form }) => {
   const router = useRouter();
   const [state, fetch] = useAsyncFn(async () => {
     const response = await fetchList(data);
@@ -59,7 +59,7 @@ const Save = ({ data, pristine, form }) => {
     <Box>
       <Box>
         <ShowStatus state={state} />
-        <Box mt="20px">
+        <Box pb="20px">
           <Button type="submit" disabled={pristine}>
             Search
           </Button>
@@ -75,18 +75,19 @@ const Save = ({ data, pristine, form }) => {
 const Porfolio = () => {
   const [formData, setFormData] = React.useState<object | null>(null);
   const onSubmit = (values) => {
-    const data = {
+    const data: { name: string } = {
       name: values.username,
-      otp: values.otp,
     };
 
     setFormData(data);
   };
   return (
-    <Box m="8% auto" w="30%">
-      <Box minH="350px" bg="white" pb="10px">
-        <Box d="flex" p="4% 0" ml="5%" borderBottom="1px solid #ccc">
-          <Heading color="orange.400">Search for Portfolio</Heading>
+    <Box m="8% auto" w={{ base: "80%", lg: "30%" }}>
+      <Box minH={{ base: "180px", lg: "250px" }} bg="white">
+        <Box d="flex" p="3% 0" ml="5%" borderBottom="1px solid #ccc">
+          <Heading color="orange.400" fontSize={{ base: 24, lg: 34 }}>
+            Search for Portfolio
+          </Heading>
         </Box>
         <Box>
           <Form
@@ -107,7 +108,7 @@ const Porfolio = () => {
                         <Input
                           borderRadius="0"
                           borderBottom="1px solid #ccc"
-                          fontSize={30}
+                          fontSize={{ base: 22, lg: 30 }}
                           id="username"
                           h="3.68rem"
                           placeholder="Portfolio Username"
@@ -122,36 +123,8 @@ const Porfolio = () => {
                     </FormControl>
                   )}
                 />
-                <Field
-                  name="otp"
-                  validate={required}
-                  render={({ input, meta }) => (
-                    <FormControl
-                      isInvalid={meta.touched && meta.error}
-                      w="90%"
-                      m="4% auto"
-                    >
-                      <InputGroup>
-                        <Input
-                          borderRadius="0"
-                          borderBottom="1px solid #ccc"
-                          fontSize={30}
-                          id="otp"
-                          h="3.68rem"
-                          placeholder="Portfolio OTP"
-                          {...input}
-                        />
-                      </InputGroup>
-                      {meta.touched && meta.error && (
-                        <FormErrorMessage ml="1%">
-                          {meta.error}
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
-                />
-                <Box w="90%" m="10px auto" d="flex">
-                  <Save data={formData} pristine={pristine} form={form} />
+                <Box w="90%" m="0 auto" d="flex">
+                  <Search data={formData} pristine={pristine} form={form} />
                 </Box>
               </form>
             )}
