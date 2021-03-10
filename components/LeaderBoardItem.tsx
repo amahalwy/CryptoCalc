@@ -1,8 +1,6 @@
 import React from "react";
 import { Box, ListItem, Text } from "@chakra-ui/layout";
-import { Image } from "@chakra-ui/react";
 import { renderChangePercent, numberWithCommas } from "../generals/functions";
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import {
   AccordionItem,
   AccordionButton,
