@@ -1,8 +1,8 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
-// import LeaderBoards from "../components/LeaderBoards";
 import StackEx from "../components/IndexStack";
 import { fetchLeaders } from "../util/FetchLeaders";
+import LeaderBoards from "../components/LeaderBoards";
 
 export const getServerSideProps = async () => {
   const lists = await fetchLeaders();
@@ -20,7 +20,7 @@ const Home = (props) => {
       w="95%"
       d={{ base: "block", lg: "flex" }}
     >
-      {/* <LeaderBoards topLists={props.lists} /> */}
+      <LeaderBoards topLists={props.lists} />
       <StackEx />
     </Box>
   );
