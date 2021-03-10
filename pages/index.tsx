@@ -3,9 +3,10 @@ import { Box } from "@chakra-ui/react";
 import StackEx from "../components/IndexStack";
 import { fetchLeaders } from "../util/FetchLeaders";
 import LeaderBoards from "../components/LeaderBoards";
+import { List } from "../typescript/interfaces";
 
 export const getServerSideProps = async () => {
-  const lists = await fetchLeaders();
+  const lists: List[] = await fetchLeaders();
   return {
     props: {
       lists,
@@ -13,7 +14,8 @@ export const getServerSideProps = async () => {
   };
 };
 
-const Home = (props) => {
+const Home = (props: { lists: List[] }) => {
+  const lists = props.lists;
   return (
     <Box
       m={{ base: "6% auto", lg: "4% auto" }}
