@@ -3,7 +3,7 @@ import { Box, Button, Image, Text } from "@chakra-ui/react";
 import { findInList } from "../generals/functions";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import SearchCoinData from "./SearchCoinData";
-import { Coin, SearchCoinProps } from "../typescript/interfaces";
+import { SearchCoinProps } from "../typescript/interfaces";
 
 const SearchCoin: React.FC<SearchCoinProps> = ({
   coin,

@@ -1,16 +1,5 @@
 import React from "react";
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Heading,
-  ListItem,
-  OrderedList,
-} from "@chakra-ui/react";
-import { fetchLeaders } from "../util/FetchLeaders";
+import { Accordion, Box, Heading, OrderedList } from "@chakra-ui/react";
 import { List } from "../typescript/interfaces";
 import LeaderBoardList from "./LeaderBoardItem";
 
