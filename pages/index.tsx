@@ -4,7 +4,7 @@ import LeaderBoards from "../components/LeaderBoards";
 import StackEx from "../components/IndexStack";
 import { fetchLeaders } from "../util/FetchLeaders";
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async () => {
   const lists = await fetchLeaders();
   return {
     props: {
