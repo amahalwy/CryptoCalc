@@ -4,6 +4,7 @@ import StackEx from "../components/IndexStack";
 import { fetchLeaders } from "../util/FetchLeaders";
 import { List } from "../typescript/interfaces";
 import LeaderBoards from "../components/LeaderBoard";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 export const getServerSideProps = async () => {
   const lists: List[] = await fetchLeaders();
@@ -28,6 +29,7 @@ const Home = (props) => {
       w="95%"
       d={{ base: "block", lg: "flex" }}
     >
+      <GoogleAnalytics />
       <LeaderBoards topLists={props.lists} />
       <StackEx />
     </Box>

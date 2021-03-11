@@ -14,6 +14,7 @@ import { required } from "../generals/validations";
 import { useAsyncFn } from "react-use";
 import { fetchList } from "../util/FetchList";
 import { useRouter } from "next/router";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const ShowStatus: React.FC<{
   state: {
@@ -101,6 +102,7 @@ const Porfolio = () => {
   };
   return (
     <Box m="8% auto" w={{ base: "80%", lg: "30%" }}>
+      <GoogleAnalytics />
       <Box minH={{ base: "180px", lg: "250px" }} bg="white">
         <Box d="flex" p="3% 0" ml="5%" borderBottom="1px solid #ccc">
           <Heading color="orange.400" fontSize={{ base: 24, lg: 34 }}>

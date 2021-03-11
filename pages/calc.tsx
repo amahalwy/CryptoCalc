@@ -3,6 +3,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import SearchForm from "../components/SearchForm";
 import SearchCoin from "../components/SearchCoin";
 import Watchlist from "../components/Watchlist";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const Calc: React.FC = () => {
   const [coin, setCoin] = React.useState<null | any>(null);
@@ -14,6 +15,7 @@ const Calc: React.FC = () => {
 
   return (
     <Box h="100%" w="100%">
+      <GoogleAnalytics />
       <Box
         w={{ base: "90%", lg: "60%" }}
         m="4% auto"
