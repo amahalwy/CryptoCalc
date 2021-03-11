@@ -62,7 +62,7 @@ const fetchLeaders = async (req, res) => {
       });
     });
 
-    const lists = await prisma.list.findMany({
+    const lists: List[] = await prisma.list.findMany({
       take: 10,
       orderBy: {
         percentChange: "desc",
