@@ -54,6 +54,7 @@ export interface CountdownProps {
 }
 
 export interface timeleft {
+  total: number;
   days: number;
   hours: number;
   minutes: number;
@@ -72,10 +73,13 @@ export interface PortfolioCoinProps {
 }
 
 export interface PortfolioListProps {
+  active: boolean;
   coins: any[];
 }
 
 export interface PortfolioTotalProps {
+  list: any;
+  active: boolean;
   coins: any[];
   startingTotal: number;
 }

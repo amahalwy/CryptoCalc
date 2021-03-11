@@ -10,17 +10,19 @@ const GetChange: React.FC<{ total: number; startingTotal: number }> = ({
   const diff: number = total - startingTotal;
 
   return (
-    <Text fontSize={20} color={diff > 0 ? "green" : "red"} mt="2px">
+    <Text fontSize={20} color={diff >= 0 ? "green" : "red"} mt="2px">
       ({(diff / startingTotal).toFixed(4)}%)
     </Text>
   );
 };
 
 const PortfolioTotal: React.FC<PortfolioTotalProps> = ({
+  list,
+  active,
   coins,
   startingTotal,
 }) => {
-  const [total, setTotal] = React.useState<number>(0);
+  const [total, setTotal] = React.useState<number>(list.endTotal);
   const getTotal = () => {
     return coins.reduce((acc, curr) => {
       return acc + curr.market_data.current_price.usd * curr.quantity;
@@ -28,7 +30,8 @@ const PortfolioTotal: React.FC<PortfolioTotalProps> = ({
   };
 
   React.useEffect(() => {
-    if (coins) {
+    console.log(active, total);
+    if (coins && active) {
       setTotal(getTotal());
     }
   }, [coins]);

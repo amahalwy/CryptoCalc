@@ -39,6 +39,7 @@ export const getTimeRemaining = (endtime: string) => {
   const days = Math.floor(total / (1000 * 60 * 60 * 24));
 
   return {
+    total,
     days,
     hours,
     minutes,

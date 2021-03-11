@@ -2,8 +2,9 @@ import React from "react";
 import { Box, CircularProgress, Heading } from "@chakra-ui/react";
 import PortfolioCoin from "./PortfolioCoin";
 import { PortfolioListProps } from "../typescript/interfaces";
+import PortfolioRefreshing from "./PortfolioRefreshing";
 
-const PortfolioList: React.FC<PortfolioListProps> = ({ coins }) => {
+const PortfolioList: React.FC<PortfolioListProps> = ({ coins, active }) => {
   const [update, setUpdate] = React.useState<number | null>(null);
 
   React.useEffect(() => {
@@ -11,6 +12,10 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ coins }) => {
       localStorage.setItem("cryptoCalcUpdate", JSON.stringify(180));
     }
     setUpdate(JSON.parse(localStorage.cryptoCalcUpdate));
+
+    if (!active) {
+      return;
+    }
     update > 0 &&
       update !== null &&
       setTimeout(() => {
@@ -29,17 +34,7 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ coins }) => {
   return (
     <Box>
       <Box m="10px 0">
-        {update > 0 && update ? (
-          <Heading>
-            Refreshing prices in: {update}
-            {update > 0 ? "s" : null}
-          </Heading>
-        ) : (
-          <Box d="flex">
-            <Heading mr="10px">Loading new prices</Heading>
-            <CircularProgress isIndeterminate color="green.300" />
-          </Box>
-        )}
+        <PortfolioRefreshing update={update} active={active} />
       </Box>
       <Box>
         {!coins

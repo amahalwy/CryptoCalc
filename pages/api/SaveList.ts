@@ -9,10 +9,14 @@ const saveList = async (req, res) => {
     return acc + curr.market_data.current_price.usd * curr.quantity;
   }, 0);
 
+  // result.setDate(result.getDate() + 3);
   const endDate = (date: number) => {
-    var result = new Date(date);
-    result.setDate(result.getDate() + 3);
-    return result;
+    let result = new Date(date);
+    let current = new Date(date);
+
+    // result.setDate(result.getMinutes() + 1);
+    // return result;
+    return new Date(date + 20000);
   };
 
   const start: string = Date.now().toString();
@@ -31,7 +35,6 @@ const saveList = async (req, res) => {
       data: {
         id: uuid(),
         userId: newUser.id,
-        active: req.body.active,
         startDate: start,
         endDate: end,
         total,
