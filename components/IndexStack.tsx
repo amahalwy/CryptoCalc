@@ -1,43 +1,25 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import React from "react";
+import { Box, Button, Text, Divider, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { Divider, Flex, useColorModeValue as mode } from "@chakra-ui/react";
-import * as React from "react";
-import { DescriptionProps, FeatureProps } from "../typescript/interfaces";
-
-const Description: React.FC<DescriptionProps> = ({ value }) => {
-  return (
-    <Flex
-      as="dl"
-      direction={{ base: "column", sm: "row" }}
-      px="6"
-      py="4"
-      _even={{ bg: mode("gray.50", "gray.600") }}
-    >
-      <Box as="dd" flex="1">
-        {value}
-      </Box>
-    </Flex>
-  );
-};
+import { FeatureProps } from "../typescript/interfaces";
 
 const Feature: React.FC<FeatureProps> = ({ title, desc, desc2, onClick }) => {
   return (
     <Box
-      maxW={{ base: "xl", md: "7xl" }}
-      mx="auto"
-      px={{ md: "8" }}
-      w={{ base: "100%", lg: "90%" }}
-      h={{ base: "100%", lg: "430px", xl: "320px" }}
       shadow="md"
       cursor="pointer"
       borderWidth="1px"
-      mb={{ base: "20px", lg: "0" }}
+      px={{ md: "8" }}
+      m={{ base: "0 auto 20px", lg: "0 auto" }}
+      w={{ base: "100%", lg: "90%" }}
+      h={{ base: "100%", lg: "430px", xl: "320px" }}
+      maxW={{ base: "xl", md: "7xl" }}
     >
       <Box
+        bg="white"
         maxW="3xl"
         mx="auto"
         rounded={{ md: "lg" }}
-        bg={mode("white", "gray.700")}
         shadow="base"
         overflow="hidden"
       >
@@ -48,7 +30,9 @@ const Feature: React.FC<FeatureProps> = ({ title, desc, desc2, onClick }) => {
         </Flex>
         <Divider />
         <Box>
-          <Description value={desc} />
+          <Flex px="6" py="4">
+            <Box>{desc}</Box>
+          </Flex>
         </Box>
         <Box d="flex" justifyContent="center" mb="4%">
           <Button children={desc2} onClick={onClick} />
