@@ -1,5 +1,5 @@
-import { Coin } from "@prisma/client";
 import { fetchCoin } from "../pages/api/FetchCoin";
+import { Coin } from "../typescript/interfaces";
 
 export const renderMarketChange = (coin: any) => {
   const val = coin.market_data.price_change_24h.toFixed(2);
