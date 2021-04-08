@@ -39,16 +39,14 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ coins, active }) => {
       <Box>
         {!coins
           ? null
-          : coins.map((coin, i) => {
-              return (
-                <PortfolioCoin
-                  key={i}
-                  update={update}
-                  coin={coin}
-                  setUpdate={setUpdate}
-                />
-              );
-            })}
+          : coins.map((coin, i) => (
+              <PortfolioCoin
+                key={i}
+                update={update}
+                coin={coin}
+                setUpdate={setUpdate}
+              />
+            ))}
       </Box>
     </Box>
   );

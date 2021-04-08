@@ -30,7 +30,6 @@ const PortfolioTotal: React.FC<PortfolioTotalProps> = ({
   };
 
   React.useEffect(() => {
-    console.log(active, total);
     if (coins && active) {
       setTotal(getTotal());
     }

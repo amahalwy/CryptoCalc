@@ -3,7 +3,7 @@ import { Box, Button, Image, Text } from "@chakra-ui/react";
 import { findInList } from "../generals/functions";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import SearchCoinData from "./SearchCoinData";
-import { SearchCoinProps } from "../typescript/interfaces";
+import { Coin, SearchCoinProps } from "../typescript/interfaces";
 
 const SearchCoin: React.FC<SearchCoinProps> = ({
   coin,
@@ -12,8 +12,8 @@ const SearchCoin: React.FC<SearchCoinProps> = ({
 }) => {
   const [showMore, setShowMore] = React.useState<boolean>(false);
 
-  const addToWatchlist = (coin) => {
-    const newList: any[] = watchlist.concat(coin);
+  const addToWatchlist = (coin: Coin) => {
+    const newList: Coin[] = watchlist.concat(coin);
     setWatchlist(newList);
   };
 

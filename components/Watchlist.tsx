@@ -9,13 +9,13 @@ import {
 } from "@chakra-ui/react";
 import { Field, Form } from "react-final-form";
 import { fetchCoin } from "../pages/api/FetchCoin";
+import { required } from "../generals/validations";
+import { Coin, WatchlistProps } from "../typescript/interfaces";
+import { SubmitData } from "../typescript/interfaces";
 import ListCoin from "./ListCoin";
 import AutoSave from "./AutoSave";
 import RunningTotal from "./RunningTotal";
 import SaveListBottom from "./SaveListBottom";
-import { required } from "../generals/validations";
-import { Coin, WatchlistProps } from "../typescript/interfaces";
-import { SubmitData } from "../typescript/interfaces";
 
 const Watchlist: React.FC<WatchlistProps> = ({
   total,
@@ -53,7 +53,7 @@ const Watchlist: React.FC<WatchlistProps> = ({
   const updateList = async () => {
     const clone: Coin[] = watchlist.slice();
     watchlist.map((coin: object | any, i) => {
-      return fetchCoin(coin.id).then((res: any) => {
+      return fetchCoin(coin.id).then((res: Coin) => {
         clone[i] = res;
         setWatchlist(clone);
       });
@@ -62,12 +62,19 @@ const Watchlist: React.FC<WatchlistProps> = ({
 
   const save = async (values) => {};
 
-  const removeField = (args, state) => {
+  const removeField = (
+    args: (string | number)[],
+    state: { fields: { [x: string]: any } }
+  ) => {
     const field = state.fields[args[0]];
     field.change(field.initial);
   };
 
-  const onSubmit = (values) => {
+  const onSubmit = (values: {
+    [x: string]: any;
+    username: any;
+    active: any;
+  }) => {
     watchlist.map((coin: Coin) => {
       coin.quantity = Number(values[coin.id]);
     });
@@ -102,17 +109,15 @@ const Watchlist: React.FC<WatchlistProps> = ({
               setCalculatingTotal={setCalculatingTotal}
             />
             <Box maxH="250px" overflow="scroll" m="0 auto">
-              {watchlist.map((coin, i) => {
-                return (
-                  <ListCoin
-                    key={i}
-                    coin={coin}
-                    form={form}
-                    watchlist={watchlist}
-                    setWatchlist={setWatchlist}
-                  />
-                );
-              })}
+              {watchlist.map((coin, i) => (
+                <ListCoin
+                  key={i}
+                  coin={coin}
+                  form={form}
+                  watchlist={watchlist}
+                  setWatchlist={setWatchlist}
+                />
+              ))}
             </Box>
             <RunningTotal total={total} calculatingTotal={calculatingTotal} />
             <Field
