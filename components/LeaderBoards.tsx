@@ -6,6 +6,7 @@ import THead from "./THead";
 
 const LeaderBoards: React.FC<LeaderBoardsProps> = ({ topLists }) => {
   const [update, setUpdate] = React.useState<number | null>(null);
+  const [activeItem, setActiveItem] = React.useState<number | null>(null);
 
   React.useEffect(() => {
     if (localStorage && !localStorage.cryptoCalcUpdate && !update) {
@@ -56,7 +57,15 @@ const LeaderBoards: React.FC<LeaderBoardsProps> = ({ topLists }) => {
             <Divider />
             <Box maxH={{ base: "160px", lg: "800px" }} overflow="scroll">
               {topLists.map((list, i) => {
-                return <LeaderBoardItem list={list} key={i} pos={i + 1} />;
+                return (
+                  <LeaderBoardItem
+                    list={list}
+                    key={i}
+                    pos={i + 1}
+                    activeItem={activeItem}
+                    setActiveItem={setActiveItem}
+                  />
+                );
               })}
             </Box>
           </Box>
