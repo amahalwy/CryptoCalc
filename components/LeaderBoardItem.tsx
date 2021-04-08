@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import {
   renderChangePercent,
   numberWithCommas,
@@ -8,7 +8,20 @@ import {
 import { DrawerProps, LeaderBoardItemProps } from "../typescript/interfaces";
 
 const Drawer: React.FC<DrawerProps> = ({ list }) => {
-  return <Box>hello</Box>;
+  return (
+    <Box>
+      <Box>Coins:</Box>
+      <Box>
+        <UnorderedList>
+          {list.coins.map((coin, i) => (
+            <ListItem>
+              {coin.name}: {numberWithCommas(coin.quantity)}
+            </ListItem>
+          ))}
+        </UnorderedList>
+      </Box>
+    </Box>
+  );
 };
 
 const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
