@@ -15,9 +15,8 @@ const Navbar = () => {
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!localStorage.cryptoCalcUpdate) {
+    if (!localStorage.cryptoCalcUpdate)
       localStorage.setItem("cryptoCalcUpdate", JSON.stringify(180));
-    }
   }, []);
 
   return (
