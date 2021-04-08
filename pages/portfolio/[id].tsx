@@ -5,13 +5,14 @@ import CountDown from "../../components/CountDown";
 import TimerComponent from "../../components/TimerComponent";
 import PortfolioList from "../../components/PortfolioList";
 import PortfolioTotal from "../../components/PortfolioTotal";
-import { List, timeleft } from "../../typescript/interfaces";
+import { List, Timeleft } from "../../typescript/interfaces";
 import { getTimeRemaining, initializePrices } from "../../generals/functions";
 import { setListActive } from "../../util/SetListActive";
+import { List as PrismaList } from "@prisma/client";
 
 export const getServerSideProps = async ({ params }) => {
   const prisma = new PrismaClient();
-  const list: List = await prisma.list.findUnique({
+  const list: PrismaList = await prisma.list.findUnique({
     where: {
       id: params.id,
     },
@@ -38,9 +39,9 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const PortfolioPage = (props: { list: List }) => {
-  const [list, setList] = React.useState(props.list);
+  const [list, setList] = React.useState<List>(props.list);
   const [localCoins, setLocalCoins] = React.useState<null | Coin[]>(null);
-  const [timeLeft, setTimeLeft] = React.useState<timeleft>(
+  const [timeLeft, setTimeLeft] = React.useState<Timeleft>(
     getTimeRemaining(list.endDate)
   );
   const [active, setActive] = React.useState<boolean>(list.active);
