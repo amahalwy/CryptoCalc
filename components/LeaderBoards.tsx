@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  Accordion,
-  Box,
-  Flex,
-  Divider,
-  Text,
-  OrderedList,
-} from "@chakra-ui/react";
+import { Box, Flex, Divider, Text } from "@chakra-ui/react";
 import { LeaderBoardsProps } from "../typescript/interfaces";
 import LeaderBoardItem from "./LeaderBoardItem";
+import THead from "./THead";
 
 const LeaderBoards: React.FC<LeaderBoardsProps> = ({ topLists }) => {
   const [update, setUpdate] = React.useState<number | null>(null);
@@ -36,12 +30,10 @@ const LeaderBoards: React.FC<LeaderBoardsProps> = ({ topLists }) => {
   return (
     <Box
       m="5% auto"
-      px={{ md: "8" }}
       h={{ base: "100%", lg: "430px", xl: "320px" }}
       w={{ base: "90%", lg: "100%" }}
       bg="white"
       shadow="md"
-      cursor="pointer"
       borderWidth="1px"
       alignItems="center"
       minH={{ base: "100%", lg: "430px", xl: "320px" }}
@@ -52,22 +44,22 @@ const LeaderBoards: React.FC<LeaderBoardsProps> = ({ topLists }) => {
           Leaderboards
         </Text>
       </Flex>
-      {!topLists.length ? <Divider /> : null}
-      <Box
-        p={{ lg: "20px" }}
-        maxH={{ base: "200px", lg: "800px" }}
-        overflow="scroll"
-      >
+      <Divider />
+      <Box p={{ lg: "20px" }}>
         {!topLists.length ? (
           <Box px="6" py="4">
             No leaders yet. Create a portfolio and lead the pack!{" "}
           </Box>
         ) : (
-          <Accordion allowToggle>
-            {topLists.map((list, i) => {
-              return <LeaderBoardItem list={list} key={i} pos={i + 1} />;
-            })}
-          </Accordion>
+          <Box>
+            <THead />
+            <Divider />
+            <Box maxH={{ base: "160px", lg: "800px" }} overflow="scroll">
+              {topLists.map((list, i) => {
+                return <LeaderBoardItem list={list} key={i} pos={i + 1} />;
+              })}
+            </Box>
+          </Box>
         )}
       </Box>
     </Box>
