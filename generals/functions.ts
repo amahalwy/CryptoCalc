@@ -57,3 +57,12 @@ export const initializePrices = async (coins: any[]) => {
   });
   return Promise.all(newCoins);
 };
+
+export const capitalize = (str: string) => {
+  return str
+    .split(" ")
+    .map((s) => {
+      return s.charAt(0).toUpperCase() + s.substr(1);
+    })
+    .join(" ");
+};
