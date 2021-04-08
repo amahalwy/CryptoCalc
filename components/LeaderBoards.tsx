@@ -56,17 +56,15 @@ const LeaderBoards: React.FC<LeaderBoardsProps> = ({ topLists }) => {
             <THead />
             <Divider />
             <Box maxH={{ base: "160px", lg: "800px" }} overflow="scroll">
-              {topLists.map((list, i) => {
-                return (
-                  <LeaderBoardItem
-                    list={list}
-                    key={i}
-                    pos={i + 1}
-                    activeItem={activeItem}
-                    setActiveItem={setActiveItem}
-                  />
-                );
-              })}
+              {topLists.map((list, i) => (
+                <LeaderBoardItem
+                  list={list}
+                  key={i}
+                  pos={i + 1}
+                  activeItem={activeItem}
+                  setActiveItem={setActiveItem}
+                />
+              ))}
             </Box>
           </Box>
         )}
