@@ -1,6 +1,8 @@
 import React from "react";
 import { ChakraProvider, extendTheme, Box } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
+import Loading from "../components/Loading";
+import { MyProvider } from "../components/Context/MyContext";
 
 const theme = extendTheme({
   styles: {
@@ -13,10 +15,15 @@ const theme = extendTheme({
 });
 
 const MyApp = ({ Component, pageProps }) => {
+  const [loading, setLoading] = React.useState<boolean>(false);
+
   return (
     <ChakraProvider theme={theme}>
       <Navbar />
-      <Component {...pageProps} />
+      <MyProvider value={{ loading, setLoading }}>
+        {loading ? <Loading /> : null}
+        <Component {...pageProps} />
+      </MyProvider>
     </ChakraProvider>
   );
 };
