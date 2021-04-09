@@ -1,9 +1,9 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
-import StackEx from "../components/IndexStack";
 import { fetchLeaders } from "../util/FetchLeaders";
 import { List } from "../typescript/interfaces";
-import LeaderBoards from "../components/LeaderBoard";
+import LeaderBoards from "../components/LeaderBoards";
+import IndexStack from "../components/IndexStack";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 
 export const getServerSideProps = async () => {
@@ -22,16 +22,15 @@ export const getServerSideProps = async () => {
   };
 };
 
-const Home = (props) => {
+const Home = (props: { lists: List[] }) => {
   return (
     <Box
       m={{ base: "6% auto", lg: "4% auto" }}
-      w="95%"
       d={{ base: "block", lg: "flex" }}
     >
       <GoogleAnalytics />
+      <IndexStack />
       <LeaderBoards topLists={props.lists} />
-      <StackEx />
     </Box>
   );
 };
