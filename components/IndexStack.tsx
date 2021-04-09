@@ -14,16 +14,11 @@ const Feature: React.FC<FeatureProps> = ({ title, desc, desc2, onClick }) => {
       w={{ base: "100%", lg: "90%" }}
       h={{ base: "100%", lg: "430px", xl: "320px" }}
       maxW={{ base: "xl", md: "7xl" }}
+      borderRadius="md"
+      bg="white"
     >
-      <Box
-        bg="white"
-        maxW="3xl"
-        mx="auto"
-        rounded={{ md: "lg" }}
-        shadow="base"
-        overflow="hidden"
-      >
-        <Flex align="center" justify="space-between" px="6" py="4">
+      <Box maxW="3xl" mx="auto" rounded={{ md: "lg" }} overflow="hidden">
+        <Flex align="center" justify="space-between" px={6} py={4}>
           <Text as="h2" fontWeight="bold" fontSize="2xl" color="orange.400">
             {title}
           </Text>
