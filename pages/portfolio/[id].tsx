@@ -1,20 +1,19 @@
 import React from "react";
 import { Box, Heading } from "@chakra-ui/react";
-import { Coin, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import CountDown from "../../components/CountDown";
-import { getTimeRemaining, initializePrices } from "../../generals/functions";
 import TimerComponent from "../../components/TimerComponent";
 import PortfolioList from "../../components/PortfolioList";
 import PortfolioTotal from "../../components/PortfolioTotal";
-import {
-  List,
-  timeleft,
-  TimerComponentProps,
-} from "../../typescript/interfaces";
+import { Coin, List, Timeleft } from "../../typescript/interfaces";
+import { getTimeRemaining, initializePrices } from "../../generals/functions";
+import { setListActive } from "../../util/SetListActive";
+import { List as PrismaList } from "@prisma/client";
+import GoogleAnalytics from "../../components/GoogleAnalytics";
 
 export const getServerSideProps = async ({ params }) => {
   const prisma = new PrismaClient();
-  const list: List = await prisma.list.findUnique({
+  const list: PrismaList = await prisma.list.findUnique({
     where: {
       id: params.id,
     },
@@ -41,23 +40,41 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const PortfolioPage = (props: { list: List }) => {
-  const list = props.list;
+  const [list, setList] = React.useState<List>(props.list);
   const [localCoins, setLocalCoins] = React.useState<null | Coin[]>(null);
-  const [timeLeft, setTimeLeft] = React.useState<timeleft>(
+  const [timeLeft, setTimeLeft] = React.useState<Timeleft>(
     getTimeRemaining(list.endDate)
   );
+  const [active, setActive] = React.useState<boolean>(list.active);
 
   React.useEffect(() => {
+    if (timeLeft.total < 1000 && active) {
+      setListActive({ list, localCoins }).then((res) => {
+        setActive(res.active);
+        setList(res);
+      });
+    }
     const timer = setTimeout(() => {
-      setTimeLeft(getTimeRemaining(list.endDate));
+      if (timeLeft.total >= 1000) {
+        setTimeLeft(getTimeRemaining(list.endDate));
+      }
     }, 1000);
     return () => clearTimeout(timer);
   });
 
-  const timerComponents: any[] = [];
+  let timerComponents: any[] = [];
 
   Object.keys(timeLeft).forEach((interval) => {
-    if (timeLeft[interval] === undefined || timeLeft[interval] === null) {
+    if (timeLeft.total <= 0) {
+      timerComponents = [];
+      return;
+    }
+
+    if (
+      timeLeft[interval] === undefined ||
+      timeLeft[interval] === null ||
+      interval === "total"
+    ) {
       return;
     }
 
@@ -68,17 +85,16 @@ const PortfolioPage = (props: { list: List }) => {
 
   React.useEffect(() => {
     if (!localCoins) {
-      initializePrices(list.coins).then((res) => {
-        setLocalCoins(res);
-      });
+      initializePrices(list.coins).then((res) => setLocalCoins(res));
     }
   }, []);
 
   return (
     <Box h="100%" w="100%">
+      <GoogleAnalytics />
       <Box w="40%" m="4% auto" pb="2%" bg="white" borderRadius="10px">
         <Box bg="orange.500" borderTopRadius="8px">
-          <Box d="flex" justifyContent="center">
+          <Box d="flex" justifyContent="center" p="10px 0">
             <Heading fontSize={50} color="white">
               Coundown Clock
             </Heading>
@@ -87,12 +103,18 @@ const PortfolioPage = (props: { list: List }) => {
             <CountDown timerComponents={timerComponents} />
           </Box>
         </Box>
+
         <Box w="95%" m="0 auto">
           <Box>
-            <PortfolioList coins={localCoins} />
+            <PortfolioList active={active} coins={localCoins} />
           </Box>
           <Box>
-            <PortfolioTotal startingTotal={list.total} coins={localCoins} />
+            <PortfolioTotal
+              list={list}
+              active={active}
+              startingTotal={list.total}
+              coins={localCoins}
+            />
           </Box>
         </Box>
       </Box>

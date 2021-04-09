@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-import { List } from "../../typescript/interfaces";
+import { PrismaClient, List } from "@prisma/client";
 import { fetchPrice } from "./FetchPrice";
 
 const fetchLeaders = async (req, res) => {

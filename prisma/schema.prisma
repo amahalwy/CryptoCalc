@@ -22,7 +22,8 @@ model List {
   endDate   String 
   total Float
   currentTotal Float
-  percentChange Float
+  endTotal Float @default(0)
+  percentChange Float 
   coins     Coin[]
   owner     User     @relation(fields: [userId], references: [id])
 }

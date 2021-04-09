@@ -4,6 +4,9 @@ import { numberWithCommas } from "../generals/functions";
 import { RunningTotalProps } from "../typescript/interfaces";
 
 const RenderTotal: React.FC<{ total: number }> = ({ total }) => {
+  if (total === 0) {
+    return null;
+  }
   if (total <= 1000000) {
     const rem: string = numberWithCommas(Number((1000000 - total).toFixed(2)));
     return (
@@ -36,14 +39,14 @@ const RunningTotal: React.FC<RunningTotalProps> = ({
   calculatingTotal,
 }) => {
   return (
-    <Box m="10px auto" pb="20px">
+    <Box m="10px auto">
       <Box d={{ base: "block", lg: "flex" }} alignItems="center">
         <Text fontSize={20} mr="4px">
           Grand total:
         </Text>
         {calculatingTotal ? (
           <Box d="flex">
-            <Text>Calculating...</Text>
+            <Text mr="4px">Calculating...</Text>
             <Spinner label="Calculating total" />
           </Box>
         ) : (

@@ -1,18 +1,57 @@
-import { Coin, List, PrismaClient, User } from "@prisma/client";
+import { PrismaClient, List, User } from "@prisma/client";
 import { uuid } from "uuidv4";
+import { Coin } from "../../typescript/interfaces";
 
-const saveList = async (req, res) => {
+interface Response {
+  active: boolean;
+  name: string;
+  otp: string;
+  id: string;
+  userId: string;
+  startDate: string;
+  endDate: string;
+  total: number;
+}
+
+const saveList = async (
+  req: { body: { name: string; coins: any[]; active: any } },
+  res: {
+    status: (
+      arg0: number
+    ) => {
+      (): any;
+      new (): any;
+      json: {
+        (arg0: {
+          active: boolean;
+          name: string;
+          otp: string;
+          id: string;
+          userId: string;
+          startDate: string;
+          endDate: string;
+          total: number;
+        }): any;
+        new (): any;
+      };
+    };
+  }
+) => {
   const prisma = new PrismaClient();
   const name: string = req.body.name;
-  const coins: any[] = req.body.coins;
+  const coins: Coin[] = req.body.coins;
   const total: number = coins.reduce((acc, curr) => {
     return acc + curr.market_data.current_price.usd * curr.quantity;
   }, 0);
 
+  // result.setDate(result.getDate() + 3);
   const endDate = (date: number) => {
-    var result = new Date(date);
-    result.setDate(result.getDate() + 3);
-    return result;
+    let result = new Date(date);
+    let current = new Date(date);
+
+    // result.setDate(result.getMinutes() + 1);
+    // return result;
+    return new Date(date + 20000);
   };
 
   const start: string = Date.now().toString();
@@ -31,7 +70,6 @@ const saveList = async (req, res) => {
       data: {
         id: uuid(),
         userId: newUser.id,
-        active: req.body.active,
         startDate: start,
         endDate: end,
         total,
@@ -60,16 +98,7 @@ const saveList = async (req, res) => {
       },
     });
 
-    const response: {
-      active: boolean;
-      name: string;
-      otp: string;
-      id: string;
-      userId: string;
-      startDate: string;
-      endDate: string;
-      total: number;
-    } = {
+    const response: Response = {
       active: req.body.active,
       name: newUser.name,
       otp: newUser.otp,

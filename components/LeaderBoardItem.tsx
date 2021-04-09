@@ -1,64 +1,60 @@
 import React from "react";
-import { Box, ListItem, Text } from "@chakra-ui/layout";
+import { Box, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import { renderChangePercent, numberWithCommas } from "../generals/functions";
-import {
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
-} from "@chakra-ui/react";
+import { DrawerProps, LeaderBoardItemProps } from "../typescript/interfaces";
 
-const LeaderBoardItem = ({ list }) => {
-  return (
-    <ListItem fontSize={20}>
-      <AccordionItem>
-        <h2>
-          <AccordionButton>
-            <Box
-              d={{ base: "block", lg: "flex" }}
-              flex="1"
-              textAlign="left"
-              justifyContent="space-between"
-            >
-              <Box d="flex">
-                <Text fontSize={{ base: 20, lg: 26 }}>{list.owner.name}</Text>
-              </Box>
-              <Box
-                d={{ base: "block", lg: "flex" }}
-                h="100%"
-                alignItems="center"
-                mt="6px"
-              >
-                <Text fontSize={20} d="inline" mr="10px">
-                  Portfolio Value: ${numberWithCommas(list.currentTotal)}
-                </Text>
-                <Text
-                  d="inline"
-                  color={renderChangePercent(list.percentChange)}
-                >
-                  ({list.percentChange > 0 ? `+` : `-`}
-                  {list.percentChange.toFixed(4)}%)
-                </Text>
-              </Box>
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-        </h2>
+const Drawer: React.FC<DrawerProps> = ({ list }) => (
+  <Box>
+    <Box>Coins:</Box>
+    <Box>
+      <UnorderedList>
+        {list.coins.map((coin, i) => (
+          <ListItem>
+            {coin.name}: {numberWithCommas(coin.quantity)}
+          </ListItem>
+        ))}
+      </UnorderedList>
+    </Box>
+  </Box>
+);
 
-        <AccordionPanel pb={4}>
-          <Box>Coins: </Box>
-          {list.coins.map((coin, i) => {
-            return (
-              <Box d="flex" key={i}>
-                <Box mr="10px">{coin.name}</Box>
-                <Box>x{numberWithCommas(coin.quantity)}</Box>
-              </Box>
-            );
-          })}
-        </AccordionPanel>
-      </AccordionItem>
-    </ListItem>
-  );
-};
+const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
+  list,
+  pos,
+  activeItem,
+  setActiveItem,
+}) => (
+  <Box
+    px={6}
+    py={4}
+    bg={pos % 2 === 0 ? "gray.100" : "white"}
+    onClick={() => {
+      activeItem === pos ? setActiveItem(null) : setActiveItem(pos);
+    }}
+  >
+    <Box d="flex">
+      <Box d="flex" p="0 7.5%" w="15%" justifyContent="center">
+        <Text>{pos}</Text>
+      </Box>
+      <Box w="50%" p="0 15%">
+        <Text textAlign="left">{list.owner.name}</Text>
+      </Box>
+      <Box w="30%">
+        <Text fontSize={16} mr="6px">
+          ${numberWithCommas(list.currentTotal)}
+        </Text>
+        <Text
+          fontSize={12}
+          h="100%"
+          color={renderChangePercent(list.percentChange)}
+        >
+          ({list.percentChange > 0 ? `+` : `-`}
+          {list.percentChange.toFixed(3)}%)
+        </Text>
+      </Box>
+    </Box>
+    {activeItem === pos ? <Drawer list={list} /> : null}
+  </Box>
+);
 
 export default LeaderBoardItem;

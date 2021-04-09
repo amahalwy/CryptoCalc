@@ -1,5 +1,5 @@
-import { Coin } from "@prisma/client";
 import { fetchCoin } from "../pages/api/FetchCoin";
+import { Coin } from "../typescript/interfaces";
 
 export const renderMarketChange = (coin: any) => {
   const val = coin.market_data.price_change_24h.toFixed(2);
@@ -39,6 +39,7 @@ export const getTimeRemaining = (endtime: string) => {
   const days = Math.floor(total / (1000 * 60 * 60 * 24));
 
   return {
+    total,
     days,
     hours,
     minutes,
@@ -46,13 +47,22 @@ export const getTimeRemaining = (endtime: string) => {
   };
 };
 
-export const initializePrices = async (coins: any[]) => {
-  const newCoins = coins.map((coin) => {
+export const initializePrices = async (coins: Coin[]) => {
+  const newCoins = coins.map(async (coin) => {
     const tempQuant = coin.quantity;
-    return fetchCoin(coin.name.toLowerCase()).then((res) => {
+    return fetchCoin(coin.name.toLowerCase()).then((res: Coin) => {
       res["quantity"] = tempQuant;
       return res;
     });
   });
   return Promise.all(newCoins);
+};
+
+export const capitalize = (str: string) => {
+  return str
+    .split(" ")
+    .map((s) => {
+      return s.charAt(0).toUpperCase() + s.substr(1);
+    })
+    .join(" ");
 };

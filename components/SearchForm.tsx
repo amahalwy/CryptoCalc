@@ -23,7 +23,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
   };
 
   return (
-    <Box w="100%">
+    <Box px={4}>
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, form, submitting, pristine, values }) => (
@@ -32,15 +32,14 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
               name="crypto"
               validate={required}
               render={({ input, meta }) => (
-                <FormControl isInvalid={meta.touched && meta.error} w="100%">
+                <FormControl isInvalid={meta.touched && meta.error}>
                   <InputGroup>
                     <Input
+                      id="crypto"
                       borderRadius="0"
                       borderBottom="1px solid #ccc"
-                      fontSize={{ base: 24, lg: 30 }}
-                      w="100%"
-                      id="crypto"
-                      h="3.68rem"
+                      fontSize={{ base: 20, lg: 30 }}
+                      h={{ base: "3rem", lg: "3.68rem" }}
                       placeholder="Search for a cryptocurrency by name"
                       {...input}
                     />
@@ -53,9 +52,9 @@ const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
             />
             <Box p="2% 0">
               <Button
+                mr="2%"
                 type="submit"
                 colorScheme="blue"
-                m="0 1%"
                 isLoading={searching}
                 disabled={pristine || submitting}
               >
