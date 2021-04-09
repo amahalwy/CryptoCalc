@@ -22,8 +22,8 @@ const SaveListBottom: React.FC<SaveListBottomProps> = ({ data, total }) => {
     <Box>
       <ShowStatus state={state} />
       <Button
-        m="10px 0"
         type="submit"
+        colorScheme="blue"
         disabled={total > 1000000 || total === 0}
       >
         {total > 1000000
