@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { Coin, PrismaClient } from "@prisma/client";
 import CountDown from "../../components/CountDown";
 import TimerComponent from "../../components/TimerComponent";
@@ -9,6 +9,7 @@ import { List, Timeleft } from "../../typescript/interfaces";
 import { getTimeRemaining, initializePrices } from "../../generals/functions";
 import { setListActive } from "../../util/SetListActive";
 import { List as PrismaList } from "@prisma/client";
+import GoogleAnalytics from "../../components/GoogleAnalytics";
 
 export const getServerSideProps = async ({ params }) => {
   const prisma = new PrismaClient();
@@ -47,7 +48,6 @@ const PortfolioPage = (props: { list: List }) => {
   const [active, setActive] = React.useState<boolean>(list.active);
 
   React.useEffect(() => {
-    console.log(list);
     if (timeLeft.total < 1000 && active) {
       setListActive({ list, localCoins }).then((res) => {
         setActive(res.active);
@@ -93,6 +93,7 @@ const PortfolioPage = (props: { list: List }) => {
 
   return (
     <Box h="100%" w="100%">
+      <GoogleAnalytics />
       <Box w="40%" m="4% auto" pb="2%" bg="white" borderRadius="10px">
         <Box bg="orange.500" borderTopRadius="8px">
           <Box d="flex" justifyContent="center" p="10px 0">
