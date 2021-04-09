@@ -38,21 +38,23 @@ const ListCoin: React.FC<ListCoinProps> = ({
       d={{ base: "block", lg: "flex" }}
       justifyContent="space-between"
       borderBottom="1px solid #ccc"
-      pb="20px"
-      mb="20px"
+      pb="4%"
     >
-      <Box d="flex" justifyContent="flex-start">
-        <Box mt={{ base: "10px", lg: "7px" }} mr={{ base: "4px", lg: "10px" }}>
-          <Image src={coin.image.thumb} />
+      <Box d="flex" alignItems="center" m="2% 0">
+        <Box mr={{ base: "4px", lg: "10px" }} mt={{ base: "1%", lg: "15px" }}>
+          <Image
+            src={coin.image.small}
+            h={{ base: "30px", sm: "35px", lg: "80%" }}
+          />
         </Box>
-        <Box>
-          <Text d="inline" fontSize={24} mr="10px">
+        <Box d="flex" alignItems="center">
+          <Text fontSize={{ base: 30, sm: 34, lg: 50 }} mr="3%">
             {coin.name}
           </Text>
-          <Text d="inline" fontSize={20} mr="6px">
+          <Text fontSize={20} mr="1%" mt="3%">
             ${numberWithCommas(coin.market_data.current_price.usd)}
           </Text>
-          <Text d="inline" color={renderChangeColor(coin)}>
+          <Text color={renderChangeColor(coin)} mt="3%">
             $({renderMarketChange(coin)})
           </Text>
         </Box>
@@ -64,10 +66,11 @@ const ListCoin: React.FC<ListCoinProps> = ({
             <FormControl isInvalid={meta.touched && meta.error} w="60%">
               <InputGroup>
                 <Input
+                  ml="1%"
+                  mt="1px"
                   id={coin.id}
                   placeholder="Quantity"
                   {...input}
-                  mt="1px"
                 />
               </InputGroup>
               {meta.touched && meta.error && (
