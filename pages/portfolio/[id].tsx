@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Heading } from "@chakra-ui/react";
-import { Coin, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import CountDown from "../../components/CountDown";
 import TimerComponent from "../../components/TimerComponent";
 import PortfolioList from "../../components/PortfolioList";
 import PortfolioTotal from "../../components/PortfolioTotal";
-import { List, Timeleft } from "../../typescript/interfaces";
+import { Coin, List, Timeleft } from "../../typescript/interfaces";
 import { getTimeRemaining, initializePrices } from "../../generals/functions";
 import { setListActive } from "../../util/SetListActive";
 import { List as PrismaList } from "@prisma/client";
@@ -85,9 +85,7 @@ const PortfolioPage = (props: { list: List }) => {
 
   React.useEffect(() => {
     if (!localCoins) {
-      initializePrices(list.coins).then((res) => {
-        setLocalCoins(res);
-      });
+      initializePrices(list.coins).then((res) => setLocalCoins(res));
     }
   }, []);
 

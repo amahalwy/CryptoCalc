@@ -47,10 +47,10 @@ export const getTimeRemaining = (endtime: string) => {
   };
 };
 
-export const initializePrices = async (coins: any[]) => {
-  const newCoins = coins.map((coin) => {
+export const initializePrices = async (coins: Coin[]) => {
+  const newCoins = coins.map(async (coin) => {
     const tempQuant = coin.quantity;
-    return fetchCoin(coin.name.toLowerCase()).then((res) => {
+    return fetchCoin(coin.name.toLowerCase()).then((res: Coin) => {
       res["quantity"] = tempQuant;
       return res;
     });
