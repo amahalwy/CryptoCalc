@@ -1,16 +1,9 @@
 import React from "react";
 import { Box, Spinner, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { ShowStatusProps } from "../typescript/interfaces";
 
-const ShowStatus: React.FC<{
-  state: {
-    loading?: boolean;
-    error?: object | undefined;
-    value?: object | any;
-  };
-}> = ({ state }) => {
-  const router = useRouter();
-
+const ShowStatus: React.FC<ShowStatusProps> = ({ state }) => {
   if (state.loading) {
     return (
       <Box m="10px 0">
@@ -18,20 +11,21 @@ const ShowStatus: React.FC<{
       </Box>
     );
   } else {
-    if (state.value && state.value.code === "P2002") {
+    if (state.value && state.value === "Error: List not found") {
       return (
-        <Box>
+        <Box mb="4%">
           <Text fontSize={20} color="red">
-            Username taken
+            {state.value}
           </Text>
         </Box>
       );
-    } else if (state.value && !state.value.code) {
-      setTimeout(() => {
-        router.push(`/portfolio/${state.value.id}`);
-      }, 2000);
+    } else if (state.value) {
       return (
-        <Box color="green">Successfully saved your list! Redirecting...</Box>
+        <Box mb="4%">
+          <Text fontSize={20} color="green">
+            Found your list! Redirecting...
+          </Text>
+        </Box>
       );
     } else {
       return null;
