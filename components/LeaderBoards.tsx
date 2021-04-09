@@ -35,6 +35,7 @@ const LeaderBoards: React.FC<LeaderBoardsProps> = ({ topLists }) => {
       w={{ base: "90%", lg: "100%" }}
       bg="white"
       shadow="md"
+      borderRadius="md"
       borderWidth="1px"
       alignItems="center"
       minH={{ base: "100%", lg: "430px", xl: "320px" }}
@@ -55,7 +56,11 @@ const LeaderBoards: React.FC<LeaderBoardsProps> = ({ topLists }) => {
           <Box>
             <THead />
             <Divider />
-            <Box maxH={{ base: "160px", lg: "800px" }} overflow="scroll">
+            <Box
+              maxH={{ base: "160px", lg: "800px" }}
+              overflow="scroll"
+              borderBottomRadius="10px"
+            >
               {topLists.map((list, i) => (
                 <LeaderBoardItem
                   list={list}
