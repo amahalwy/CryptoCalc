@@ -88,67 +88,69 @@ const Watchlist: React.FC<WatchlistProps> = ({
   };
 
   return (
-    <Box w="96%" m="0 auto">
-      <Text fontSize={{ base: 18, lg: 24 }} m="20px 0" w="98%">
-        Coins data refreshing in: {update}
-        {update > 0 ? "s" : null}
-      </Text>
-      <Form
-        onSubmit={onSubmit}
-        mutators={{
-          removeField,
-        }}
-        initialValues={{ active: false }}
-        render={({ handleSubmit, form, values }) => (
-          <form onSubmit={handleSubmit}>
-            <AutoSave
-              debounce={100}
-              save={save}
-              setTotal={setTotal}
-              watchlist={watchlist}
-              setCalculatingTotal={setCalculatingTotal}
-            />
-            <Box maxH="250px" overflow="scroll" m="0 auto">
-              {watchlist.map((coin, i) => (
-                <ListCoin
-                  key={i}
-                  coin={coin}
-                  form={form}
-                  watchlist={watchlist}
-                  setWatchlist={setWatchlist}
-                />
-              ))}
-            </Box>
-            <RunningTotal total={total} calculatingTotal={calculatingTotal} />
-            <Field
-              name="username"
-              validate={required}
-              render={({ input, meta }) => (
-                <FormControl isInvalid={meta.touched && meta.error} w="100%">
-                  <InputGroup>
-                    <Input
-                      borderRadius="0"
-                      borderBottom="1px solid #ccc"
-                      fontSize={{ base: 24, lg: 30 }}
-                      w="100%"
-                      id="username"
-                      h="3.68rem"
-                      placeholder="Create portfolio with username"
-                      {...input}
-                    />
-                  </InputGroup>
-                  {meta.touched && meta.error && (
-                    <FormErrorMessage ml="1%">{meta.error}</FormErrorMessage>
-                  )}
-                </FormControl>
-              )}
-            />
-            <Box p="10px 0">
-              <SaveListBottom data={formData} total={total} />
-            </Box>
-          </form>
-        )}
-      />
+    <Box borderTop="1px solid #ccc" px={4}>
+      <Box m="0 auto" h="20%">
+        <Text fontSize={{ base: 18, lg: 24 }} mt="2%">
+          Coins data refreshing in: {update}
+          {update > 0 ? "s" : null}
+        </Text>
+        <Form
+          onSubmit={onSubmit}
+          mutators={{
+            removeField,
+          }}
+          initialValues={{ active: false }}
+          render={({ handleSubmit, form, values }) => (
+            <form onSubmit={handleSubmit}>
+              <AutoSave
+                debounce={100}
+                save={save}
+                setTotal={setTotal}
+                watchlist={watchlist}
+                setCalculatingTotal={setCalculatingTotal}
+              />
+              <Box maxH="250px" overflow="scroll" m="0 auto">
+                {watchlist.map((coin, i) => (
+                  <ListCoin
+                    key={i}
+                    coin={coin}
+                    form={form}
+                    watchlist={watchlist}
+                    setWatchlist={setWatchlist}
+                  />
+                ))}
+              </Box>
+              <RunningTotal total={total} calculatingTotal={calculatingTotal} />
+              <Field
+                name="username"
+                validate={required}
+                render={({ input, meta }) => (
+                  <FormControl isInvalid={meta.touched && meta.error} w="100%">
+                    <InputGroup>
+                      <Input
+                        borderRadius="0"
+                        borderBottom="1px solid #ccc"
+                        fontSize={{ base: 20, lg: 30 }}
+                        w="100%"
+                        id="username"
+                        h={{ base: "3rem", lg: "3.68rem" }}
+                        placeholder="Create portfolio with username"
+                        {...input}
+                      />
+                    </InputGroup>
+                    {meta.touched && meta.error && (
+                      <FormErrorMessage ml="1%">{meta.error}</FormErrorMessage>
+                    )}
+                  </FormControl>
+                )}
+              />
+              <Box p="10px 0">
+                <SaveListBottom data={formData} total={total} />
+              </Box>
+            </form>
+          )}
+        />
+      </Box>
     </Box>
   );
 };
