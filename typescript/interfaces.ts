@@ -107,6 +107,8 @@ export interface ShowStatusProps {
     loading?: boolean;
     error?: Error;
     value?: string;
+    code?: string;
+    status?: number;
   };
 }
 export interface PortfolioCoinProps {
