@@ -2,6 +2,7 @@ import React from "react";
 import { Box, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import { renderChangePercent, numberWithCommas } from "../generals/functions";
 import { DrawerProps, LeaderBoardItemProps } from "../typescript/interfaces";
+import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 const Drawer: React.FC<DrawerProps> = ({ list }) => (
   <Box>
@@ -9,7 +10,7 @@ const Drawer: React.FC<DrawerProps> = ({ list }) => (
     <Box>
       <UnorderedList>
         {list.coins.map((coin, i) => (
-          <ListItem>
+          <ListItem key={i}>
             {coin.name}: {numberWithCommas(coin.quantity)}
           </ListItem>
         ))}
@@ -40,8 +41,13 @@ const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
         <Text textAlign="left">{list.owner.name}</Text>
       </Box>
       <Box w="30%">
-        <Text fontSize={16} mr="6px">
+        <Text fontSize={16} mr="6px" d="flex">
           ${numberWithCommas(list.currentTotal)}
+          {activeItem === pos ? (
+            <MdArrowDropUp fontSize={20} />
+          ) : (
+            <MdArrowDropDown fontSize={20} />
+          )}
         </Text>
         <Text
           fontSize={12}
