@@ -1,5 +1,5 @@
 import React from "react";
-import { FormSpy } from "react-final-form";
+import { FormSpy, FormSpyProps } from "react-final-form";
 import diff from "object-diff";
 
 class AutoSave extends React.Component {
@@ -18,7 +18,7 @@ class AutoSave extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate() {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
@@ -68,6 +68,9 @@ class AutoSave extends React.Component {
 // - Maintain state of when we are submitting
 // - Render a message when submitting
 // - Pass in debounce and save props nicely
-export default (props) => (
+export default (
+  props: JSX.IntrinsicAttributes &
+    FormSpyProps<Record<string, any>, Partial<Record<string, any>>>
+) => (
   <FormSpy {...props} subscription={{ values: true }} component={AutoSave} />
 );
