@@ -1,15 +1,16 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
-import { fetchLeaders } from "../util/FetchLeaders";
+import { fetchLeaders } from "../util/lists/fetchLeaders";
 import { List } from "../typescript/interfaces";
 import LeaderBoards from "../components/LeaderBoards";
 import IndexStack from "../components/IndexStack";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import { NextPage } from "next";
 
 export const getServerSideProps = async () => {
-  const lists: List[] = await fetchLeaders();
+  const response: List[] = await fetchLeaders();
 
-  if (!lists) {
+  if (!response) {
     return {
       notFound: true,
     };
@@ -17,12 +18,20 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      lists,
+      response,
     },
   };
 };
 
-const Home = (props: { lists: List[] }) => {
+interface HomeProps {
+  response: {
+    lists: List[];
+    status: number;
+  };
+}
+
+const Home: NextPage<HomeProps> = ({ response }) => {
+  const { lists } = response;
   return (
     <Box
       m={{ base: "6% auto", lg: "4% auto" }}
@@ -30,7 +39,7 @@ const Home = (props: { lists: List[] }) => {
     >
       <GoogleAnalytics />
       <IndexStack />
-      <LeaderBoards topLists={props.lists} />
+      <LeaderBoards topLists={lists} />
     </Box>
   );
 };
