@@ -32,6 +32,7 @@ export interface Coin {
     ath: {
       usd?: number;
     };
+    price_change_24h?: number;
   };
 }
 export interface List {
