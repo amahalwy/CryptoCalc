@@ -10,7 +10,7 @@ const GetChange: React.FC<{ total: number; startingTotal: number }> = ({
   const diff: number = total - startingTotal;
 
   return (
-    <Text fontSize={20} color={diff >= 0 ? "green" : "red"} mt="2px">
+    <Text fontSize={16} color={diff >= 0 ? "green" : "red"} mt="4px">
       ({(diff / startingTotal).toFixed(4)}%)
     </Text>
   );
@@ -37,14 +37,15 @@ const PortfolioTotal: React.FC<PortfolioTotalProps> = ({
 
   return (
     <Box>
+      <Box>
+        <Text fontSize={26}>Portfolio Value:</Text>
+      </Box>
       <Box m="10px 0">
-        <Text fontSize={22}>
-          Starting Value: ${numberWithCommas(startingTotal)}{" "}
-        </Text>
+        <Text fontSize={20}>Starting: ${numberWithCommas(startingTotal)} </Text>
       </Box>
       <Box d="flex">
-        <Text fontSize={22} mr="4px">
-          Current Portfolio Value: ${numberWithCommas(total)}
+        <Text fontSize={20} mr="4px">
+          Current: ${numberWithCommas(total)}
         </Text>
         <GetChange total={total} startingTotal={startingTotal} />
       </Box>
