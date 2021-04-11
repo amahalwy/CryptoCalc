@@ -1,17 +1,17 @@
-import { fetchCoin } from "../pages/api/FetchCoin";
+import { fetchCoin } from "../util/coins/fetchCoin";
 import { Coin } from "../typescript/interfaces";
 
-export const renderMarketChange = (coin: any) => {
-  const val = coin.market_data.price_change_24h.toFixed(2);
+export const renderMarketChange = (coin: Coin) => {
+  const val = Number(coin.market_data.price_change_24h.toFixed(2));
   return val > 0 ? `+${numberWithCommas(val)}` : `${numberWithCommas(val)}`;
 };
 
-export const renderChangeColor = (coin: any) => {
+export const renderChangeColor = (coin: Coin) => {
   return coin.market_data.price_change_24h > 0 ? "green" : "red";
 };
 
-export const renderChangePercent = (value) => {
-  return value > 0 ? "green" : "red";
+export const renderChangePercent = (value: number) => {
+  return value < 0.0 ? "red" : "green";
 };
 
 export const findInList = (watchlist: Coin[], coin: Coin) => {

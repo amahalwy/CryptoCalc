@@ -1,35 +1,34 @@
 import React from "react";
-import { Box, Spinner, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import { Box, Spinner } from "@chakra-ui/react";
 import { ShowStatusProps } from "../typescript/interfaces";
 
 const ShowStatus: React.FC<ShowStatusProps> = ({ state }) => {
   if (state.loading) {
     return (
-      <Box m="10px 0">
+      <Box mb="20px">
         <Spinner />
       </Box>
     );
+  } else if (state.value && state.value.status === 404) {
+    return (
+      <Box color="red" mb="20px">
+        Error: Couldn't find your list
+      </Box>
+    );
+  } else if (state.value && state.value.status === 200) {
+    return (
+      <Box color="green" mb="20px">
+        Found your Portfolio! Redirecting...{" "}
+      </Box>
+    );
+  } else if (state.value && state.value.status === 201) {
+    return (
+      <Box color="green" mb="20px">
+        Created your Portfolio! Redirecting...{" "}
+      </Box>
+    );
   } else {
-    if (state.value && state.value === "Error: List not found") {
-      return (
-        <Box mb="4%">
-          <Text fontSize={20} color="red">
-            {state.value}
-          </Text>
-        </Box>
-      );
-    } else if (state.value) {
-      return (
-        <Box mb="4%">
-          <Text fontSize={20} color="green">
-            Found your list! Redirecting...
-          </Text>
-        </Box>
-      );
-    } else {
-      return null;
-    }
+    return null;
   }
 };
 

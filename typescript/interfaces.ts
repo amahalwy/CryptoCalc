@@ -32,6 +32,7 @@ export interface Coin {
     ath: {
       usd?: number;
     };
+    price_change_24h?: number;
   };
 }
 export interface List {
@@ -102,11 +103,28 @@ export interface SearchProps {
   pristine: boolean;
   form: object | any;
 }
+interface StatusReponse {
+  status?: number;
+  id?: string;
+  userId?: string;
+  active?: boolean;
+  startDate?: string;
+  endDate?: string;
+  total?: number;
+  currentTotal?: number;
+  endTotal?: number;
+  name?: string;
+  otp?: string;
+  coins?: Coin[];
+  percentChange?: number;
+}
 export interface ShowStatusProps {
   state: {
     loading?: boolean;
     error?: Error;
-    value?: string;
+    value?: StatusReponse;
+    code?: string;
+    status?: number;
   };
 }
 export interface PortfolioCoinProps {

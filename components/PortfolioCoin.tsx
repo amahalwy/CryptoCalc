@@ -5,8 +5,8 @@ import {
   renderChangeColor,
   renderMarketChange,
 } from "../generals/functions";
-import { fetchPrice } from "../pages/api/FetchPrice";
 import { PortfolioCoinProps } from "../typescript/interfaces";
+import { fetchCoin } from "../util/coins/fetchCoin";
 
 const PortfolioCoin: React.FC<PortfolioCoinProps> = ({ coin, update }) => {
   const [price, setPrice] = React.useState<null | number>(
@@ -21,8 +21,8 @@ const PortfolioCoin: React.FC<PortfolioCoinProps> = ({ coin, update }) => {
 
   const updateCoinPrice = async () => {
     setPrice(null);
-    await fetchPrice(coin.name.toLowerCase()).then((res) => {
-      setPrice(res[coin.id].usd);
+    await fetchCoin(coin.name.toLowerCase()).then((res) => {
+      setPrice(res.market_data.current_price.usd);
     });
   };
 
@@ -34,28 +34,26 @@ const PortfolioCoin: React.FC<PortfolioCoinProps> = ({ coin, update }) => {
       m="4px 0"
       alignItems="center"
     >
-      <Box mr="10px" h="100%">
-        <Image src={coin.image.small} />
+      <Box mr={{ base: "4px", lg: "10px" }} mt={{ sm: "1%", lg: "15px" }}>
+        <Image
+          src={coin.image.small}
+          h={{ base: "30px", sm: "35px", lg: "80%" }}
+        />
       </Box>
-      <Box d="flex" alignItems="center" justifyContent="space-between" w="90%">
-        <Box d="flex">
-          <Text fontSize={34} mr="10px">
-            {coin.name}
-          </Text>
-          <Box mt="4.5%">
-            <Text d="inline" fontSize={22} mr="6px">
-              {!price ? <Spinner /> : `$${numberWithCommas(price)}`}
-            </Text>
-            <Text d="inline" color={renderChangeColor(coin)}>
-              $({renderMarketChange(coin)})
-            </Text>
-          </Box>
-        </Box>
-        <Box>
-          <Text fontSize={20} mr="10px">
-            Quantity: {coin.quantity}
-          </Text>
-        </Box>
+      <Box w="90%" d="flex" alignItems="center">
+        <Text fontSize={{ base: 36, lg: 50 }} mr="4px">
+          {coin.name}
+        </Text>
+        <Text fontSize={20} mr="1%" mt="3%">
+          {!price ? <Spinner /> : `$${numberWithCommas(price)}`}
+        </Text>
+        <Text color={renderChangeColor(coin)} mt="3%">
+          $({renderMarketChange(coin)})
+        </Text>
+
+        <Text fontSize={20} mt="3%" ml="4%">
+          Qty: {coin.quantity}
+        </Text>
       </Box>
     </Box>
   );

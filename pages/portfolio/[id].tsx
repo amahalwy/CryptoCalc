@@ -1,18 +1,17 @@
 import React from "react";
 import { Box, Heading } from "@chakra-ui/react";
-import { PrismaClient } from "@prisma/client";
+import { List as PrismaList } from "@prisma/client";
+import { getTimeRemaining, initializePrices } from "../../generals/functions";
+import { setListActive } from "../../util/lists/setListActive";
+import { Coin, List, Timeleft } from "../../typescript/interfaces";
 import CountDown from "../../components/CountDown";
 import TimerComponent from "../../components/TimerComponent";
 import PortfolioList from "../../components/PortfolioList";
 import PortfolioTotal from "../../components/PortfolioTotal";
-import { Coin, List, Timeleft } from "../../typescript/interfaces";
-import { getTimeRemaining, initializePrices } from "../../generals/functions";
-import { setListActive } from "../../util/SetListActive";
-import { List as PrismaList } from "@prisma/client";
 import GoogleAnalytics from "../../components/GoogleAnalytics";
+import prisma from "../../lib/prisma";
 
 export const getServerSideProps = async ({ params }) => {
-  const prisma = new PrismaClient();
   const list: PrismaList = await prisma.list.findUnique({
     where: {
       id: params.id,
@@ -74,9 +73,8 @@ const PortfolioPage = (props: { list: List }) => {
       timeLeft[interval] === undefined ||
       timeLeft[interval] === null ||
       interval === "total"
-    ) {
+    )
       return;
-    }
 
     timerComponents.push(
       <TimerComponent key={interval} interval={interval} timeLeft={timeLeft} />
@@ -84,19 +82,24 @@ const PortfolioPage = (props: { list: List }) => {
   });
 
   React.useEffect(() => {
-    if (!localCoins) {
+    if (!localCoins)
       initializePrices(list.coins).then((res) => setLocalCoins(res));
-    }
   }, []);
 
   return (
-    <Box h="100%" w="100%">
+    <Box w="100%">
       <GoogleAnalytics />
-      <Box w="40%" m="4% auto" pb="2%" bg="white" borderRadius="10px">
+      <Box
+        w={{ base: "90%", lg: "40%" }}
+        m="6% auto"
+        pb="2%"
+        bg="white"
+        borderRadius="lg"
+      >
         <Box bg="orange.500" borderTopRadius="8px">
           <Box d="flex" justifyContent="center" p="10px 0">
             <Heading fontSize={50} color="white">
-              Coundown Clock
+              Countdown Clock
             </Heading>
           </Box>
           <Box>

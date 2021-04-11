@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Box,
   Heading,
@@ -12,16 +12,12 @@ import { Form, Field } from "react-final-form";
 import { required } from "../generals/validations";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 import Search from "../components/Portfolio/Search";
-import MyContext from "../components/Context/MyContext";
-import { Context } from "../typescript/interfaces";
 
 const Porfolio = () => {
-  const [formData, setFormData] = React.useState<object | null>(null);
+  const [formData, setFormData] = React.useState<string | null>(null);
 
   const onSubmit = (values: { username: string }) => {
-    const data: { name: string } = {
-      name: values.username,
-    };
+    const data: string = values.username;
     setFormData(data);
   };
 

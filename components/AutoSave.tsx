@@ -18,7 +18,7 @@ class AutoSave extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate() {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
