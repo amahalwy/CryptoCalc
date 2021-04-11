@@ -1,5 +1,5 @@
 import React from "react";
-import { FormSpy, FormSpyProps } from "react-final-form";
+import { FormSpy } from "react-final-form";
 import diff from "object-diff";
 
 class AutoSave extends React.Component {
