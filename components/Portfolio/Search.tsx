@@ -2,10 +2,15 @@ import React, { useContext } from "react";
 import { Box, Button } from "@chakra-ui/react";
 import { useAsyncFn } from "react-use";
 import { useRouter } from "next/router";
-import { fetchList } from "../../util/FetchList";
-import { Context, SearchProps } from "../../typescript/interfaces";
+import { fetchList } from "../../util/lists/fetchList";
+import {
+  Context,
+  List,
+  SearchProps,
+  ShowStatusProps,
+} from "../../typescript/interfaces";
 import ShowStatus from "../ShowStatus";
-import MyContext from "../Context/MyContext";
+import MyContext from "../../lib/MyContext";
 
 const Search: React.FC<SearchProps> = ({ data, pristine, form }) => {
   const { setLoading } = useContext<Context>(MyContext);
@@ -17,10 +22,12 @@ const Search: React.FC<SearchProps> = ({ data, pristine, form }) => {
 
   React.useEffect(() => {
     if (data) {
-      fetch().then((res) => {
-        if (res !== "Error: List not found") {
+      fetch().then((res: { status: number; list: List }) => {
+        if (res.status === 200) {
           setLoading(true);
-          router.push(`/portfolio/${res}`).then(() => setLoading(false));
+          router
+            .push(`/portfolio/${res.list.id}`)
+            .then(() => setLoading(false));
         }
       });
     }
