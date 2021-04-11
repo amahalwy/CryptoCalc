@@ -9,5 +9,5 @@ export const fetchPrice = async (tickets: string | string[]) => {
       },
     }
   );
-  return await req.json();
+  return req.json();
 };
