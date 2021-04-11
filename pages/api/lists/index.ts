@@ -112,14 +112,10 @@ const handler = async (req, res) => {
         return acc + curr.market_data.current_price.usd * curr.quantity;
       }, 0);
 
-      // result.setDate(result.getDate() + 3);
       const endDate = (date: number) => {
         let result = new Date(date);
-        let current = new Date(date);
-
-        // result.setDate(result.getMinutes() + 1);
-        // return result;
-        return new Date(date + 20000);
+        result.setDate(result.getDate() + 3);
+        return result;
       };
 
       const start: string = Date.now().toString();
