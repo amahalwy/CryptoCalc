@@ -1,11 +1,15 @@
 import { Box, Button } from "@chakra-ui/react";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useContext } from "react";
 import useAsyncFn from "react-use/lib/useAsyncFn";
-import { SaveListBottomProps } from "../typescript/interfaces";
-import { saveList } from "../util/SaveList";
+import MyContext from "../lib/MyContext";
+import { Context, SaveListBottomProps } from "../typescript/interfaces";
+import { saveList } from "../util/lists/saveList";
 import ShowStatus from "./ShowStatus";
 
 const SaveListBottom: React.FC<SaveListBottomProps> = ({ data, total }) => {
+  const { setLoading } = useContext<Context>(MyContext);
+  const router = useRouter();
   const [state, fetch] = useAsyncFn(async () => {
     const response = await saveList(data);
     const result = await response;
@@ -14,7 +18,10 @@ const SaveListBottom: React.FC<SaveListBottomProps> = ({ data, total }) => {
 
   React.useEffect(() => {
     if (data) {
-      fetch();
+      fetch().then((res) => {
+        setLoading(true);
+        router.push(`/portfolio/${res.id}`).then(() => setLoading(false));
+      });
     }
   }, [data]);
 
