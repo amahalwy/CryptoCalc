@@ -42,7 +42,9 @@ const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
       </Box>
       <Box w="30%">
         <Text fontSize={16} mr="6px" d="flex">
-          ${numberWithCommas(list.currentTotal)}
+          {list.active
+            ? `${numberWithCommas(list.currentTotal)}`
+            : `${numberWithCommas(list.endTotal)}`}
           {activeItem === pos ? (
             <MdArrowDropUp fontSize={20} />
           ) : (
@@ -54,7 +56,7 @@ const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
           h="100%"
           color={renderChangePercent(list.percentChange)}
         >
-          ({list.percentChange > 0 ? `+` : `-`}
+          ({list.percentChange < 0.0 ? `-` : `+`}
           {list.percentChange.toFixed(3)}%)
         </Text>
       </Box>
