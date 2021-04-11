@@ -1,4 +1,4 @@
-import { fetchCoin } from "../pages/api/FetchCoin";
+import { fetchCoin } from "../util/coins/fetchCoin";
 import { Coin } from "../typescript/interfaces";
 
 export const renderMarketChange = (coin: any) => {
@@ -11,7 +11,7 @@ export const renderChangeColor = (coin: any) => {
 };
 
 export const renderChangePercent = (value) => {
-  return value > 0 ? "green" : "red";
+  return value < 0.0 ? "red" : "green";
 };
 
 export const findInList = (watchlist: Coin[], coin: Coin) => {
