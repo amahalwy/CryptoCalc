@@ -3,12 +3,7 @@ import { Box, Button } from "@chakra-ui/react";
 import { useAsyncFn } from "react-use";
 import { useRouter } from "next/router";
 import { fetchList } from "../../util/lists/fetchList";
-import {
-  Context,
-  List,
-  SearchProps,
-  ShowStatusProps,
-} from "../../typescript/interfaces";
+import { Context, List, SearchProps } from "../../typescript/interfaces";
 import ShowStatus from "../ShowStatus";
 import MyContext from "../../lib/MyContext";
 
