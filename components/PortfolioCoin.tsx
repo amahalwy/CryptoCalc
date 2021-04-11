@@ -5,8 +5,8 @@ import {
   renderChangeColor,
   renderMarketChange,
 } from "../generals/functions";
-import { fetchPrice } from "../util/coins/price";
 import { PortfolioCoinProps } from "../typescript/interfaces";
+import { fetchCoin } from "../util/coins/fetchCoin";
 
 const PortfolioCoin: React.FC<PortfolioCoinProps> = ({ coin, update }) => {
   const [price, setPrice] = React.useState<null | number>(
@@ -21,8 +21,8 @@ const PortfolioCoin: React.FC<PortfolioCoinProps> = ({ coin, update }) => {
 
   const updateCoinPrice = async () => {
     setPrice(null);
-    await fetchPrice(coin.name.toLowerCase()).then((res) => {
-      setPrice(res[coin.id].usd);
+    await fetchCoin(coin.name.toLowerCase()).then((res) => {
+      setPrice(res.market_data.current_price.usd);
     });
   };
 
