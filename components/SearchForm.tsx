@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Form, Field } from "react-final-form";
 import { required } from "../generals/validations";
-import { fetchCoin } from "../pages/api/FetchCoin";
+import { fetchCoin } from "../util/coins/fetchCoin";
 import { SearchFormProps } from "../typescript/interfaces";
 
 const SearchForm: React.FC<SearchFormProps> = ({ setCoin }) => {
