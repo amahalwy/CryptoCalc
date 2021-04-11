@@ -68,9 +68,6 @@ class AutoSave extends React.Component {
 // - Maintain state of when we are submitting
 // - Render a message when submitting
 // - Pass in debounce and save props nicely
-export default (
-  props: JSX.IntrinsicAttributes &
-    FormSpyProps<Record<string, any>, Partial<Record<string, any>>>
-) => (
+export default (props) => (
   <FormSpy {...props} subscription={{ values: true }} component={AutoSave} />
 );
