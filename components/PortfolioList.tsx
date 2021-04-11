@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, CircularProgress, Heading } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import PortfolioCoin from "./PortfolioCoin";
 import { PortfolioListProps } from "../typescript/interfaces";
 import PortfolioRefreshing from "./PortfolioRefreshing";
