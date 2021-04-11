@@ -11,7 +11,8 @@ const GetChange: React.FC<{ total: number; startingTotal: number }> = ({
 
   return (
     <Text fontSize={16} color={diff >= 0 ? "green" : "red"} mt="4px">
-      ({(diff / startingTotal).toFixed(4)}%)
+      ({diff / startingTotal < 0.0 ? `-` : `+`}
+      {(diff / startingTotal).toFixed(4)}%)
     </Text>
   );
 };
@@ -30,9 +31,7 @@ const PortfolioTotal: React.FC<PortfolioTotalProps> = ({
   };
 
   React.useEffect(() => {
-    if (coins && active) {
-      setTotal(getTotal());
-    }
+    if (coins && active) setTotal(getTotal());
   }, [coins]);
 
   return (
@@ -45,7 +44,7 @@ const PortfolioTotal: React.FC<PortfolioTotalProps> = ({
       </Box>
       <Box d="flex">
         <Text fontSize={20} mr="4px">
-          Current: ${numberWithCommas(total)}
+          {list.active ? " Current" : "Final Total"}: ${numberWithCommas(total)}
         </Text>
         <GetChange total={total} startingTotal={startingTotal} />
       </Box>
