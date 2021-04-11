@@ -8,7 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Field, Form } from "react-final-form";
-import { fetchCoin } from "../pages/api/FetchCoin";
+import { fetchCoin } from "../util/coins/fetchCoin";
 import { required } from "../generals/validations";
 import { Coin, WatchlistProps } from "../typescript/interfaces";
 import { SubmitData } from "../typescript/interfaces";
@@ -52,11 +52,10 @@ const Watchlist: React.FC<WatchlistProps> = ({
 
   const updateList = async () => {
     const clone: Coin[] = watchlist.slice();
-    watchlist.map((coin: object | any, i) => {
-      return fetchCoin(coin.id).then((res: Coin) => {
-        clone[i] = res;
-        setWatchlist(clone);
-      });
+    watchlist.map(async (coin: Coin, i) => {
+      const res = await fetchCoin(coin.id);
+      clone[i] = res;
+      setWatchlist(clone);
     });
   };
 
